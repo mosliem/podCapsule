@@ -30,7 +30,7 @@ class SearchButtonView: UIView {
         
         button.clipsToBounds = true
         button.layer.cornerRadius = 7.5
-    
+        
         button.backgroundColor = #colorLiteral(red: 0.8979603648, green: 0.8980897069, blue: 0.8979320526, alpha: 1)
         button.tintColor = #colorLiteral(red: 0.1128981188, green: 0.2162761092, blue: 0.2516562045, alpha: 1)
         return button

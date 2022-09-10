@@ -30,10 +30,10 @@ extension SearchRouter: SearchViewRouter {
     
     func moveToSearchController() {
         let searchResult = SearchResultsVC()
-        let view = UISearchController(searchResultsController: searchResult)
-        view.definesPresentationContext = true
-        view.searchResultsUpdater = searchResult
-        SearchView?.present(view, animated: true, completion: nil)
+        let searchController = UISearchController(searchResultsController: searchResult)
+        searchController.view.backgroundColor = .white
+        searchController.searchResultsUpdater = searchResult
+        SearchView?.present(searchController, animated: true, completion: nil)
     }
     
     

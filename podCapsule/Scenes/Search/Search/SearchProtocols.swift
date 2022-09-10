@@ -9,6 +9,9 @@ import Foundation
 
 protocol SearchView: class {
     var presenter: SearchViewPresenter? { get set }
+    
+    func hideNavigationBar()
+    func showNavigationBar()
 }
 
 protocol SearchViewPresenter: class {
@@ -20,6 +23,7 @@ protocol SearchViewPresenter: class {
     init(view: SearchView, interactor: SearchInteractorInput, router: SearchViewRouter)
     
     func searchPressed()
+    func tableScrolled(with offset: Float)
 }
 
 protocol SearchViewRouter: class {

@@ -9,7 +9,7 @@ import UIKit
 
 class SearchVC: UIViewController {
 
-    @IBOutlet weak var searchResultTableView: UITableView!
+    @IBOutlet weak var suggestedPodcastsTableView: UITableView!
     var presenter: SearchViewPresenter?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -19,11 +19,12 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Search"
-        searchResultTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
-        searchResultTableView.delegate = self
-        searchResultTableView.dataSource = self
+        suggestedPodcastsTableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        suggestedPodcastsTableView.delegate = self
+        suggestedPodcastsTableView.dataSource = self
+        
     }
 
-
+    
     
 }

@@ -9,8 +9,14 @@ import UIKit
 
 
 extension SearchVC: SearchView {
-  
     
+    func hideNavigationBar() {
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+    
+    func showNavigationBar() {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
     
 }
 
@@ -20,7 +26,7 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource{
         return 1
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 30
+        return 60
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -41,6 +47,17 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource{
         return 65
     }
     
+
+}
+
+extension SearchVC: UIScrollViewDelegate{
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        
+        presenter?.tableScrolled(with:Float(scrollView.contentOffset.y))
+        
+        
+    }
     
 }
 

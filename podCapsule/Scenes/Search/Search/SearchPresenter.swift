@@ -8,7 +8,7 @@
 import Foundation
 
 class SearchPresenter: SearchViewPresenter {
-   
+    
     weak var view: SearchView?
     var interactor: SearchInteractorInput?
     var router: SearchViewRouter?
@@ -23,8 +23,21 @@ class SearchPresenter: SearchViewPresenter {
         router?.moveToSearchController()
     }
     
+    func configureCell(){
+        
+    }
+    
+    func tableScrolled(with offset: Float) {
+        
+        if offset > 0 {
+            view?.hideNavigationBar()
+        }
+        else{
+            view?.showNavigationBar()
+        }
+    }
+    
 }
-
 
 extension SearchPresenter: SearchInteractorOutput{
     
