@@ -8,20 +8,25 @@
 import UIKit
 
 extension HomeVC: HomeView{
-
-
+    
+    func reloadHomeCollectionView() {
+        DispatchQueue.main.async {
+            self.homeCollectionView?.reloadData()
+        }
+    }
     
     
 }
 
 
-extension HomeVC: UICollectionViewDataSource , UICollectionViewDelegate{
+extension HomeVC: UICollectionViewDataSource , UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 4
+        return presenter?.numberOfSections() ?? 0
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return (presenter?.itemsForSection(for: section))!
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -31,10 +36,12 @@ extension HomeVC: UICollectionViewDataSource , UICollectionViewDelegate{
         
         case 0:
              cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentlyPlayedCell.identifier, for: indexPath) as! RecentlyPlayedCell
+            
             return cell
         
         default:
             cell = collectionView.dequeueReusableCell(withReuseIdentifier: PodcastCell.identifier, for: indexPath) as! PodcastCell
+            presenter?.configureCell(at: indexPath.section, for: indexPath.row, cell: cell)
             return cell
         }
         
@@ -46,4 +53,5 @@ extension HomeVC: UICollectionViewDataSource , UICollectionViewDelegate{
         presenter?.titleForSection(for: indexPath.section, header: header)
         return header
     }
+    
 }

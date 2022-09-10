@@ -14,7 +14,7 @@ class HomeSectionsCollectionReusableView: UICollectionReusableView {
         private let titleLabel : UILabel = {
             let label = UILabel()
             label.numberOfLines = 1
-            label.font = UIFont(name: "Helvetica Neue Bold", size: 25)
+            label.font = UIFont(name: "Helvetica Neue Bold", size: 22)
             label.textColor = #colorLiteral(red: 0.0383454673, green: 0.1741192639, blue: 0.2161790133, alpha: 1)
             label.shadowOffset = CGSize.zero
             return label

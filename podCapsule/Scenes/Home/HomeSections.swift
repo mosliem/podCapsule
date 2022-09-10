@@ -7,11 +7,11 @@
 
 import Foundation
 
-enum HomeSectionHeader: Int, CaseIterable {
+enum HomeSections: Int, CaseIterable {
+    
     case RecentlyPlayed = 0
     case PopularPodcasts = 1
-    case BestPodcasts = 2
-    case InterestedTopics = 3
+    case JustListen = 2
     
     var title: String {
         
@@ -20,14 +20,18 @@ enum HomeSectionHeader: Int, CaseIterable {
             return "Recently Played"
         case .PopularPodcasts:
             return "Popular Podcasts"
-        case .BestPodcasts:
-            return "Best Podcasts"
-        case .InterestedTopics:
-            return "Interested Topics"
+        case .JustListen:
+            return "Just Listen"
+    
         }
     }
     
     static func titleForIndex(index: Int) -> String? {
         return self.allCases.first{$0.rawValue == index}?.title
+    }
+    
+    
+    static func sectionForIndex(index: Int) -> HomeSections{
+        return self.allCases.first{$0.rawValue == index}!
     }
 }

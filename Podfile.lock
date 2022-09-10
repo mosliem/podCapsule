@@ -1,0 +1,36 @@
+PODS:
+  - Realm (10.17.0):
+    - Realm/Headers (= 10.17.0)
+  - Realm/Headers (10.17.0)
+  - RealmSwift (10.17.0):
+    - Realm (= 10.17.0)
+  - RSSelectionMenu (7.1.3)
+  - SDWebImage (5.12.3):
+    - SDWebImage/Core (= 5.12.3)
+  - SDWebImage/Core (5.12.3)
+  - SKCountryPicker (2.0.0)
+
+DEPENDENCIES:
+  - RealmSwift (~> 10)
+  - RSSelectionMenu
+  - SDWebImage
+  - SKCountryPicker
+
+SPEC REPOS:
+  trunk:
+    - Realm
+    - RealmSwift
+    - RSSelectionMenu
+    - SDWebImage
+    - SKCountryPicker
+
+SPEC CHECKSUMS:
+  Realm: 9533276bd76f66aa2fd0d3ffe700c1f6023dcab6
+  RealmSwift: 57f5d59aa29852587aad1e861989e7af139894b5
+  RSSelectionMenu: 873d62ebbaef138519f6cf3f073412c2b5d94c2c
+  SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
+  SKCountryPicker: 9d4921503cad7224a14a150802bb71228adbd90f
+
+PODFILE CHECKSUM: a121ee90e4ced15a5e8d1cd2d2c5f60b19be0e3c
+
+COCOAPODS: 1.10.1

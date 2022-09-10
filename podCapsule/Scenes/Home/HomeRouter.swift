@@ -9,11 +9,17 @@ import UIKit
 
 class HomeRouter{
     
-    class func create() -> UIViewController {
+    static func create() -> UIViewController {
         
-        let homeVC = HomeVC()
-        let presenter = HomePresenter(view: homeVC)
-        homeVC.presenter = presenter
-        return homeVC
+        let view = HomeVC()
+        let networkInteractor = HomeNetworkInteractor()
+        let localInteractor = HomeLocalInteractor()
+        let presenter = HomePresenter(view: view, networkInteractor: networkInteractor, localInteractor: localInteractor)
+        
+        view.presenter = presenter
+        networkInteractor.presenter = presenter
+        localInteractor.presenter = presenter
+        
+        return view
     }
 }
