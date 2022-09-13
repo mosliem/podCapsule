@@ -14,12 +14,13 @@ class HomeNetworkInteractor: HomeNetworkInteractorInputProtocol {
     
     func fetchPopularPodcast() {
         
-        NetworkManger.shared.callRequest(objectType: PopularPodcasts.self, endpoint: HomeRequest.fetchPopularPodcastsList(pageNumber: 1)) { [weak self] (result) in
+//        let endpoint =
+        
+        NetworkManger.shared.callRequest(objectType: PopularPodcasts.self, endpoint: HomeRequest.fetchPopularPodcastsList(pageNumber: 1) ) { [weak self] (result) in
             
             switch result {
             
             case .success(let model):
-                print(model)
                 var popularPodcasts: [PodcastObject] = []
                 
                 for podcasts in model.curated_lists {
@@ -44,7 +45,7 @@ class HomeNetworkInteractor: HomeNetworkInteractorInputProtocol {
         var episodeList = [EpisodeObject]()
         let group = DispatchGroup()
         
-        for _ in 0 ..< 15 {
+        for _ in 0 ..< 5 {
             
             group.enter()
             
@@ -67,6 +68,22 @@ class HomeNetworkInteractor: HomeNetworkInteractorInputProtocol {
         
         group.notify(queue: .main){
             self.presenter?.randomEpisodesFetched(episodes: episodeList)
+        }
+    }
+    
+    func fetchBestForCategory(genre_id: Int, pageNum: Int, region: String){
+        
+        let endpoint = HomeRequest.fetchBestForCategory(genre_id: genre_id, pageNum: pageNum, region: region)
+        NetworkManger.shared.callRequest(objectType: BestPodcastsObject.self, endpoint: endpoint ) {[weak self] (result) in
+            
+            switch result {
+            case .success(let podcasts):
+                print(podcasts.name, podcasts.podcasts.count)
+                self?.presenter?.bestForCategoryFetched(podcasts: podcasts)
+                
+            case .failure(let error):
+                self?.presenter?.failedWith(with: error)
+            }
         }
     }
     

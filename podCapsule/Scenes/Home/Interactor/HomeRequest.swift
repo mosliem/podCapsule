@@ -11,6 +11,7 @@ enum HomeRequest: Endpoint{
     
     case fetchPopularPodcastsList(pageNumber: Int)
     case fetchRandomEpisode
+    case fetchBestForCategory(genre_id: Int, pageNum: Int, region: String)
     
     var URLPath: String {
         switch self {
@@ -19,6 +20,8 @@ enum HomeRequest: Endpoint{
             
         case .fetchRandomEpisode:
             return "just_listen"
+        case .fetchBestForCategory:
+            return "best_podcasts"
         }
     }
     
@@ -26,11 +29,16 @@ enum HomeRequest: Endpoint{
         
         var parameters = defualtParameters
         switch self {
-        case .fetchPopularPodcastsList:
-            parameters = ["page":"1"]
+        
+        case .fetchPopularPodcastsList(let pageNumber):
+        parameters = ["page": pageNumber]
             
         case .fetchRandomEpisode:
             parameters = [:]
+            
+        case .fetchBestForCategory(genre_id: let genre_id, pageNum: let pageNum, region: let region):
+            parameters = ["page":pageNum, "genre_id": genre_id]
+            
         }
         return parameters
     }
@@ -41,6 +49,8 @@ enum HomeRequest: Endpoint{
         case .fetchPopularPodcastsList:
             return .GET
         case .fetchRandomEpisode:
+            return .GET
+        case .fetchBestForCategory:
             return .GET
         }
     }

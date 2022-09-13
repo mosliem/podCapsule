@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchResultsVC" customModule="podCapsule" customModuleProvider="target">
             <connections>
+                <outlet property="resultsTableView" destination="Sui-7c-IVY" id="MdN-Wd-KP0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>

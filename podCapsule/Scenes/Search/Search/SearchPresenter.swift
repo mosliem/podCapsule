@@ -23,8 +23,8 @@ class SearchPresenter: SearchViewPresenter {
         router?.moveToSearchController()
     }
     
-    func configureCell(){
-        
+    func configure(){
+    
     }
     
     func tableScrolled(with offset: Float) {

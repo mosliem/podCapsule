@@ -14,13 +14,7 @@ class HomeVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        
-        let color = #colorLiteral(red: 0.1128981188, green: 0.2162761092, blue: 0.2516562045, alpha: 1)
-        let appearnce = UINavigationBarAppearance()
-        let attributes = [NSAttributedString.Key.foregroundColor: color] as [NSAttributedString.Key: Any]
-        appearnce.titleTextAttributes = attributes
-        appearnce.largeTitleTextAttributes = attributes
-        navigationController?.navigationBar.standardAppearance = appearnce
+        setupNavigationBarAppearance()
     }
     
     override func viewDidLoad() {
@@ -30,6 +24,18 @@ class HomeVC: UIViewController {
         presenter?.viewDidLoad()
     }
     
+    
+   private func setupNavigationBarAppearance(){
+    
+        let color = #colorLiteral(red: 0.1128981188, green: 0.2162761092, blue: 0.2516562045, alpha: 1)
+        let appearance = UINavigationBarAppearance()
+        let attributes = [NSAttributedString.Key.foregroundColor: color] as [NSAttributedString.Key: Any]
+        
+        appearance.titleTextAttributes = attributes
+        appearance.largeTitleTextAttributes = attributes
+        
+        navigationController?.navigationBar.standardAppearance = appearance
+    }
     
     private func configureHomeCollectionView(){
         

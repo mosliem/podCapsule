@@ -36,13 +36,17 @@ protocol HomeNetworkInteractorInputProtocol: class {
     var presenter: HomeNetworkInteractorOutputProtocol? { get set }
     func fetchPopularPodcast()
     func fetchRandomEpisodes()
+    func fetchBestForCategory(genre_id: Int, pageNum: Int, region: String)
+    
 }
 
 protocol HomeNetworkInteractorOutputProtocol: class {
     
     var networkInteractor: HomeNetworkInteractorInputProtocol? { get set }
+    
     func popularPodcastFetched(podcasts: [PodcastObject])
     func randomEpisodesFetched(episodes: [EpisodeObject])
+    func bestForCategoryFetched(podcasts: BestPodcastsObject)
     func failedWith(with error: Error)
     
 }
@@ -52,7 +56,7 @@ protocol HomeLocalInteractorInput: class {
     var presenter: HomeLocalInteractorOutput? { get set }
     
     func getCategories()
-    
+    func getRegion()
 }
 
 protocol HomeLocalInteractorOutput: class {
@@ -60,6 +64,7 @@ protocol HomeLocalInteractorOutput: class {
     var localInteractor: HomeLocalInteractorInput? { get set }
     
     func success(with categories: [CategoryModel])
+    func success(with country: String)
     func failed(with error: Error)
     
 }

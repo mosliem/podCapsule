@@ -8,7 +8,7 @@
 import Foundation
 
 class HomeLocalInteractor: HomeLocalInteractorInput{
-    
+
     weak var presenter: HomeLocalInteractorOutput?
     
     func getCategories() {
@@ -28,4 +28,8 @@ class HomeLocalInteractor: HomeLocalInteractorInput{
     }
     
     
+    func getRegion() {
+        let country = UserDefaultManger.shared.retrieveObject(for: "country") as! String
+        presenter?.success(with: country)
+    }
 }

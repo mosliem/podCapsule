@@ -9,8 +9,7 @@ import Foundation
 
 var categoryId: [String : Int] = [
     
-    "English": 142,
-    "Personal": 144,
+    "English Learning": 142,
     "Training": 115,
     "Sports": 77,
     "Storytelling": 165,

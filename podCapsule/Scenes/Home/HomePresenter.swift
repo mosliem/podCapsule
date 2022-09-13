@@ -12,11 +12,16 @@ class HomePresenter: HomeViewPresenter{
     weak var view: HomeView?
     var networkInteractor: HomeNetworkInteractorInputProtocol?
     var localInteractor: HomeLocalInteractorInput?
-    var categories = [CategoryModel]()
     
+    private var region: String?
+    private var selectedCategories = [CategoryModel]()
     private var popularPodcasts = [PodcastObject]()
     private var recentlyPlayed = [PodcastObject]()
     private var randomEpisodes = [EpisodeObject]()
+    private var categoriesBestPodcasts = [String: [PodcastObject]]()
+    
+    private var fetchGroup = DispatchGroup()
+    
     
     required init(view: HomeView?, networkInteractor: HomeNetworkInteractorInputProtocol?, localInteractor: HomeLocalInteractorInput) {
         self.view = view
@@ -26,15 +31,44 @@ class HomePresenter: HomeViewPresenter{
     
     func viewDidLoad() {
         
+        getPreferences()
+        fetchPodcasts()
+        
+    }
+    
+    private func fetchPodcasts(){
+        
+        fetchGroup.enter()
+        fetchGroup.enter()
+        
+        networkInteractor?.fetchPopularPodcast()
+        networkInteractor?.fetchRandomEpisodes()
+        fetchCategoriesPodcasts()
+        
+        fetchGroup.notify(queue: .main){
+            self.view?.reloadHomeCollectionView()
+        }
+    }
+    
+    private func getPreferences(){
         localInteractor?.getCategories()
-        //        networkInteractor?.fetchPopularPodcast()
-        //        interactor?.fetchRandomEpisodes()
+        localInteractor?.getRegion()
+    }
+    
+    private func fetchCategoriesPodcasts(){
+        
+        for category in selectedCategories {
+            
+            fetchGroup.enter()
+            networkInteractor?.fetchBestForCategory(genre_id: category.categoryId, pageNum: 1, region: region!)
+            
+        }
         
     }
     
     
     func numberOfSections() -> Int {
-        return categories.count + 3
+        return selectedCategories.count + 3
     }
     
     func itemsForSection(for section: Int) -> Int {
@@ -52,20 +86,36 @@ class HomePresenter: HomeViewPresenter{
             }
         }
         else{
-            return 10
+            
+            let categoryName = selectedCategories[section - 3].categoryName
+            
+            let categoryPodcasts = categoriesBestPodcasts[categoryName]
+            print(categoryName, categoryPodcasts?.count)
+            return categoryPodcasts?.count ?? 0
+        }
+    }
+    
+    func heightForRecentlyPlay() -> Double {
+        
+        if recentlyPlayed.count != 0{
+            return 60
+        }
+        else{
+            return 0
         }
     }
     
     func titleForSection(for section: Int, header: HomeCollectionReusableViewInput){
         
+        //Main sections
         if section < 3{
             let title = HomeSections.titleForIndex(index: section)  ?? ""
             header.dispalySectionTitle(text: title)
         }
         else{
-            
+            // categories sections
             let index = section - 3
-            let title = categories[index].categoryName
+            let title = selectedCategories[index].categoryName
             header.dispalySectionTitle(text: title)
             
         }
@@ -81,7 +131,7 @@ class HomePresenter: HomeViewPresenter{
                 break
             case .PopularPodcasts:
                 let cellData = popularPodcasts[indexPath]
-                setPopularPodcastData(for: cell as! PodcastCellView, cellData: cellData)
+                setPodcastData(for: cell as! PodcastCellView, cellData: cellData)
                 
             case .JustListen:
                 let cellData = randomEpisodes[indexPath]
@@ -89,12 +139,19 @@ class HomePresenter: HomeViewPresenter{
             }
         }
         else{
-           
             
+            let categoryName = selectedCategories[section - 3].categoryName
+            
+            guard let categoryPodcasts = categoriesBestPodcasts[categoryName]  else {
+                return
+            }
+            
+            let podcastData = categoryPodcasts[indexPath]
+            setPodcastData(for: cell as! PodcastCellView, cellData: podcastData)
         }
     }
     
-    private func setPopularPodcastData(for cell: PodcastCellView, cellData: PodcastObject){
+    private func setPodcastData(for cell: PodcastCellView, cellData: PodcastObject){
         
         let title =  cellData.title
         let image =  cellData.image
@@ -110,50 +167,59 @@ class HomePresenter: HomeViewPresenter{
         cell.displayPosterImage(urlString: image)
     }
     
-    
-    func heightForRecentlyPlay() -> Double {
-        
-        if recentlyPlayed.count != 0{
-            return 60
-        }
-        else{
-            return 0
-        }
-    }
-    
 }
 
 
 extension HomePresenter: HomeNetworkInteractorOutputProtocol{
     
-    
     func popularPodcastFetched(podcasts: [PodcastObject]) {
+        defer {
+            fetchGroup.leave()
+        }
+        
         popularPodcasts = podcasts.shuffled()
-        view?.reloadHomeCollectionView()
     }
     
     func randomEpisodesFetched(episodes: [EpisodeObject]) {
+        defer {
+            fetchGroup.leave()
+        }
         randomEpisodes = episodes
-        view?.reloadHomeCollectionView()
     }
     
-    
     func failedWith(with error: Error) {
+        
+        defer {
+            fetchGroup.leave()
+        }
         print(error.localizedDescription)
     }
     
+    func bestForCategoryFetched(podcasts: BestPodcastsObject) {
+        
+        defer {
+            fetchGroup.leave()
+        }
+        let categoryName = podcasts.name
+        categoriesBestPodcasts.updateValue(podcasts.podcasts, forKey: categoryName)
+        
+    }
     
 }
 
 extension HomePresenter: HomeLocalInteractorOutput{
     
+    func success(with country: String) {
+        region = country.lowercased()
+    }
+    
     func failed(with error: Error) {
-        
+        print(error.localizedDescription)
     }
     
     
     func success(with categories: [CategoryModel]) {
-        self.categories = categories
+        self.selectedCategories = categories
     }
     
     

@@ -40,7 +40,7 @@ class PodcastCell: UICollectionViewCell {
         posterImageShadowView.layer.cornerRadius = 20
         posterImageShadowView.layer.shadowRadius = 4
         posterImageShadowView.layer.shadowColor = #colorLiteral(red: 0.0383454673, green: 0.1741192639, blue: 0.2161790133, alpha: 1).cgColor
-        posterImageShadowView.layer.shadowOpacity = 0.5
+        posterImageShadowView.layer.shadowOpacity = 0.3
         posterImageShadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
