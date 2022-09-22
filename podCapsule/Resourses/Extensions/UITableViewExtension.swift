@@ -5,4 +5,12 @@
 //  Created by mohamedSliem on 9/16/22.
 //
 
-import Foundation
+import UIKit
+
+extension UITableView{
+    
+    func dequeue<T: UITableViewCell>(_ cellType: T.Type, for indexPath: IndexPath) -> T {
+        return dequeueReusableCell(withIdentifier: String(describing: cellType), for: indexPath) as!  T
+    }
+    
+}
