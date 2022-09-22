@@ -10,6 +10,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchResultsVC" customModule="podCapsule" customModuleProvider="target">
             <connections>
+                <outlet property="noResultsAnimationView" destination="TsK-At-kb1" id="dU1-gL-SbZ"/>
+                <outlet property="noResultsLabel" destination="VwZ-ZJ-Ri1" id="ZMx-fh-YUQ"/>
                 <outlet property="resultsTableView" destination="Sui-7c-IVY" id="MdN-Wd-KP0"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -19,20 +21,42 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Sui-7c-IVY">
-                    <rect key="frame" x="0.0" y="44" width="414" height="818"/>
-                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Sui-7c-IVY">
+                    <rect key="frame" x="10" y="0.0" width="394" height="862"/>
                 </tableView>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results found!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VwZ-ZJ-Ri1">
+                    <rect key="frame" x="20" y="433" width="374" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="MUU-Bg-ijd"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="20"/>
+                    <color key="textColor" red="0.1128981188" green="0.21627610920000001" blue="0.25165620449999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TsK-At-kb1">
+                    <rect key="frame" x="87" y="188" width="240" height="240"/>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="240" id="PCk-VS-Rfs"/>
+                        <constraint firstAttribute="width" constant="240" id="XDH-PF-374"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Sui-7c-IVY" secondAttribute="trailing" id="5XX-fN-vpF"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Sui-7c-IVY" secondAttribute="trailing" constant="10" id="5XX-fN-vpF"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="Sui-7c-IVY" secondAttribute="bottom" id="6v1-IM-o1q"/>
-                <constraint firstItem="Sui-7c-IVY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="kpc-AK-srg"/>
-                <constraint firstItem="Sui-7c-IVY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ynE-z9-8M6"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="TsK-At-kb1" secondAttribute="trailing" constant="87" id="7dK-TQ-V5h"/>
+                <constraint firstItem="VwZ-ZJ-Ri1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="YLW-G7-sxC"/>
+                <constraint firstItem="TsK-At-kb1" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="87" id="evA-FJ-B0N"/>
+                <constraint firstItem="VwZ-ZJ-Ri1" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="10" id="ixg-4F-u1E"/>
+                <constraint firstItem="Sui-7c-IVY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="kpc-AK-srg"/>
+                <constraint firstItem="VwZ-ZJ-Ri1" firstAttribute="top" secondItem="TsK-At-kb1" secondAttribute="bottom" constant="5" id="s1l-Wz-87f"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VwZ-ZJ-Ri1" secondAttribute="trailing" constant="20" id="wAm-FW-ecG"/>
+                <constraint firstItem="Sui-7c-IVY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ynE-z9-8M6"/>
             </constraints>
-            <point key="canvasLocation" x="86" y="74"/>
+            <point key="canvasLocation" x="-1555.072463768116" y="-893.97321428571422"/>
         </view>
     </objects>
     <resources>

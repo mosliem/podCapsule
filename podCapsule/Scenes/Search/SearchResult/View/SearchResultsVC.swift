@@ -6,12 +6,19 @@
 //
 
 import UIKit
+import Lottie
 
 class SearchResultsVC: UIViewController {
 
     @IBOutlet weak var resultsTableView: UITableView!
+    @IBOutlet weak var noResultsLabel: UILabel!
+    
+    @IBOutlet weak var noResultsAnimationView: UIView!
+    internal var noResultsAnimation: AnimationView?
+    
     var presenter: SearchResultsViewPresenter?
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,9 +29,15 @@ class SearchResultsVC: UIViewController {
         
         resultsTableView.delegate = self
         resultsTableView.dataSource = self
+        resultsTableView.contentInsetAdjustmentBehavior = .never
+        
         resultsTableView.register(
-            UINib(nibName: SearchResultsTableViewCell.identifier, bundle: nil),
-            forCellReuseIdentifier: SearchResultsTableViewCell.identifier)
+            UINib(nibName: EpisodeResultsTableViewCell.identifier, bundle: nil),
+            forCellReuseIdentifier: EpisodeResultsTableViewCell.identifier)
+        
+        resultsTableView.register(
+            UINib(nibName: PodcastResultsTableViewCell.identifier, bundle: nil),
+            forCellReuseIdentifier: PodcastResultsTableViewCell.identifier)
     }
      
 
