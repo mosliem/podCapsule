@@ -13,10 +13,12 @@ class SearchResultsPresenter: SearchResultsViewPresenter {
     var router: SearchResultsViewRouter?
     var interactor: SearchResultsInteractorInput?
     
-    private var episodeSearchResult = [EpisodeResponse]()
-    private var podcastSearchResult = [PodcastResponse]()
+    private var episodeSearchResult = [EpisodeObject]()
+    private var podcastSearchResult = [PodcastObject]()
     
     private var searchResultGroup = DispatchGroup()
+    
+    weak var delegate: SelectedResultsCellProtocol?
     
     required init(view: SearchResultsView, router: SearchResultsViewRouter, interactor: SearchResultsInteractorInput) {
         
@@ -126,10 +128,10 @@ extension SearchResultsPresenter{
         switch SearchResultsSections.typeForSection(index: section) {
            
             case .Podcasts:
-                router?.moveToPodcastDetails(with: podcastSearchResult[indexPath])
+                delegate?.didSelectPodcast(podcast: podcastSearchResult[indexPath])
             
             case .Episodes:
-                router?.moveToEpisodePlayer(with: episodeSearchResult[indexPath])
+                delegate?.didSelectEpisode(episode: episodeSearchResult[indexPath])
         }
     }
 }
@@ -152,17 +154,17 @@ extension SearchResultsPresenter{
         
     }
     
-    private func configurePodcastCell(cellData: PodcastResponse, cell: PodcastResultsTableCellView){
+    private func configurePodcastCell(cellData: PodcastObject, cell: PodcastResultsTableCellView){
         
-        if let imageURL = URL(string: cellData.image ?? ""){
+        if let imageURL = URL(string: cellData.image ){
             cell.displayImage(with: imageURL)
         }
         else{
             cell.displayDefaultImage()
         }
         
-        cell.displayPublisher(publisher: cellData.publisher_original)
-        cell.displayTitle(title: cellData.title_original)
+        cell.displayPublisher(publisher: cellData.publisher)
+        cell.displayTitle(title: cellData.title)
         
         
         guard let genreId = cellData.genre_ids?.first else{
@@ -175,23 +177,23 @@ extension SearchResultsPresenter{
     }
     
     
-    private func configureEpisodeCell(cellData: EpisodeResponse, cell: EpisodeResultsTableCellView){
+    private func configureEpisodeCell(cellData: EpisodeObject, cell: EpisodeResultsTableCellView){
         
-        if let imageURL = URL(string: cellData.image ?? ""){
+        if let imageURL = URL(string: cellData.image ){
             cell.displayImage(with: imageURL)
         }
         else{
             cell.displayDefaultImage()
         }
         
-        if let publisher = cellData.podcast?.publisher_original {
+        if let publisher = cellData.podcast?.publisher {
             cell.displayPublisher(publisher: publisher )
         }
         let duration = convertSecToDuration(sec: cellData.audio_length_sec)
         cell.displayDuration(duration: duration)
         
         
-        cell.displayTitle(title: cellData.title_original)
+        cell.displayTitle(title: cellData.title)
     }
     
     private func convertSecToDuration(sec: Int) -> String{
@@ -229,3 +231,5 @@ extension SearchResultsPresenter: SearchResultsInteractorOutput{
     }
     
 }
+
+

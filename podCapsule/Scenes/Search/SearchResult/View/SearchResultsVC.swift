@@ -38,6 +38,8 @@ class SearchResultsVC: UIViewController {
         resultsTableView.register(
             UINib(nibName: PodcastResultsTableViewCell.identifier, bundle: nil),
             forCellReuseIdentifier: PodcastResultsTableViewCell.identifier)
+        
+        resultsTableView.tableFooterView = UIView()
     }
      
 

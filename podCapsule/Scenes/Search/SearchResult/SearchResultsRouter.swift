@@ -27,14 +27,8 @@ class SearchResultsRouter {
 }
 
 extension SearchResultsRouter: SearchResultsViewRouter{
-    
-    func moveToPodcastDetails(with podcast: PodcastResponse) {
-    
+    func dismissView(){
+        SearchResultView?.dismiss(animated: true, completion: nil)
     }
-    
-    func moveToEpisodePlayer(with episode: EpisodeResponse){
-        
-    }
-    
     
 }

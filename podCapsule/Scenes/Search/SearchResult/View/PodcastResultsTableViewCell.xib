@@ -47,7 +47,7 @@
                         <color key="backgroundColor" red="0.1128981188" green="0.21627610920000001" blue="0.25165620449999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="height" constant="30" id="ar6-6s-x80"/>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="140" id="xns-oY-DzA"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="125" id="xns-oY-DzA"/>
                         </constraints>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="15"/>
                         <color key="textColor" red="0.89796036479999997" green="0.89808970690000001" blue="0.89793205259999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>

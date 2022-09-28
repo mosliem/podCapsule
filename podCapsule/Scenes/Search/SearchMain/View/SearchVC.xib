@@ -10,7 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SearchVC" customModule="podCapsule" customModuleProvider="target">
             <connections>
-                <outlet property="suggestedPodcastsTableView" destination="NWT-9Q-s5L" id="ifC-Sy-6d0"/>
+                <outlet property="suggestedPodcastsTableView" destination="NWT-9Q-s5L" id="SVn-QI-uDp"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -29,7 +29,7 @@
             <constraints>
                 <constraint firstItem="NWT-9Q-s5L" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="1SI-zg-wFJ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="NWT-9Q-s5L" secondAttribute="trailing" id="GXS-l0-KEB"/>
-                <constraint firstItem="NWT-9Q-s5L" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="KIB-rI-CKr"/>
+                <constraint firstItem="NWT-9Q-s5L" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="bdK-gs-y6I"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="NWT-9Q-s5L" secondAttribute="bottom" id="eD5-MY-0hW"/>
             </constraints>
             <point key="canvasLocation" x="-210.1449275362319" y="-14.0625"/>

@@ -52,22 +52,25 @@ protocol SearchResultsViewPresenter: class {
     
     var view: SearchResultsView? { get set }
     var router: SearchResultsViewRouter? { get set }
+    var delegate: SelectedResultsCellProtocol? { get set }
+
     
     init(view: SearchResultsView, router: SearchResultsViewRouter, interactor: SearchResultsInteractorInput)
     func searchBarChanged(with text: String?)
+    
     func numberOfSection() -> Int
     func titleForSection(for section: Int) -> String
     func itemsForSection(for section: Int) -> Int
+    
     func configureCell <T>(for section: Int, at indexPath: Int, cell: T)
     func cellTypeForSection <T> (for section: Int) -> T
     func selectCell(for section: Int, at indexPath: Int)
+    
     func typingStarted()
 }
 
 protocol SearchResultsViewRouter: class {
-    
-    func moveToPodcastDetails(with podcast: PodcastResponse)
-    func moveToEpisodePlayer(with episode: EpisodeResponse)
+    func dismissView()
 }
 
 protocol SearchResultsInteractorInput: class {
@@ -83,4 +86,12 @@ protocol SearchResultsInteractorOutput: class {
     func success(with results: EpisodeSearchResponse)
     func success(with results: PodcastSearchResponse)
     func failed(with error: Error)
+}
+
+
+protocol SelectedResultsCellProtocol: class {
+    
+    func didSelectEpisode(episode: EpisodeObject)
+    func didSelectPodcast(podcast: PodcastObject)
+
 }

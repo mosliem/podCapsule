@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="KGk-i7-Jjw" customClass="SuggestedPodcastsTableViewCell" customModule="podCapsule" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="390" height="100"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="390" height="100"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1661872754162" translatesAutoresizingMaskIntoConstraints="NO" id="9ah-MC-Oq5">
+                        <rect key="frame" x="10" y="5" width="90" height="90"/>
+                        <constraints>
+                            <constraint firstAttribute="width" constant="90" id="Jxh-XD-NHp"/>
+                            <constraint firstAttribute="height" constant="90" id="ejH-U9-m3v"/>
+                        </constraints>
+                    </imageView>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back issue With treasy edison-Episode 134" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="0V5-3V-Gek">
+                        <rect key="frame" x="115" y="15" width="260" height="38.5"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="45" id="e91-sq-OdO"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="16"/>
+                        <color key="textColor" red="0.1128981188" green="0.21627610920000001" blue="0.25165620449999998" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Back issue With treasy edison-Episode 134" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I1B-V1-ZZP">
+                        <rect key="frame" x="115" y="58.5" width="250" height="25"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="25" id="ho3-m4-RFc"/>
+                        </constraints>
+                        <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="14"/>
+                        <color key="textColor" white="0.66666666669999997" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="9ah-MC-Oq5" secondAttribute="bottom" constant="5" id="2YU-MP-xcL"/>
+                    <constraint firstItem="0V5-3V-Gek" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="15" id="DTx-XH-him"/>
+                    <constraint firstItem="I1B-V1-ZZP" firstAttribute="leading" secondItem="9ah-MC-Oq5" secondAttribute="trailing" constant="15" id="ITT-RK-4rU"/>
+                    <constraint firstAttribute="trailing" secondItem="I1B-V1-ZZP" secondAttribute="trailing" constant="25" id="Njg-42-LE2"/>
+                    <constraint firstItem="9ah-MC-Oq5" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="WhN-xn-jh0"/>
+                    <constraint firstAttribute="trailing" secondItem="0V5-3V-Gek" secondAttribute="trailing" constant="15" id="bnH-p1-b20"/>
+                    <constraint firstItem="0V5-3V-Gek" firstAttribute="leading" secondItem="9ah-MC-Oq5" secondAttribute="trailing" constant="15" id="fWg-pp-UO5"/>
+                    <constraint firstItem="I1B-V1-ZZP" firstAttribute="top" secondItem="0V5-3V-Gek" secondAttribute="bottom" constant="5" id="niQ-qw-7Zc"/>
+                    <constraint firstItem="9ah-MC-Oq5" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="wAO-r2-TLM"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="posterImageView" destination="9ah-MC-Oq5" id="d9n-Ml-HJf"/>
+                <outlet property="publisherLabel" destination="I1B-V1-ZZP" id="IoB-Nw-ePb"/>
+                <outlet property="titleLabel" destination="0V5-3V-Gek" id="JlL-3s-qu3"/>
+            </connections>
+            <point key="canvasLocation" x="-369.56521739130437" y="28.125"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="1661872754162" width="1321" height="1450"/>
+    </resources>
+</document>
