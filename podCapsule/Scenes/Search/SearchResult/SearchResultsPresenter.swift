@@ -79,10 +79,13 @@ class SearchResultsPresenter: SearchResultsViewPresenter {
         }
         else{
             
-            view?.hideLoadingIndicator()
-            view?.hideResultsTableView()
-            view?.showNoResultsLabel()
-            view?.showNoResultsAnimation()
+            DispatchQueue.main.async {
+                self.view?.hideLoadingIndicator()
+                self.view?.hideResultsTableView()
+                self.view?.showNoResultsLabel()
+                self.view?.showNoResultsAnimation()
+            }
+           
         }
     }
     
@@ -197,7 +200,8 @@ extension SearchResultsPresenter{
     }
     
     private func convertSecToDuration(sec: Int) -> String{
-        return "\(sec / 60)min"
+        let duration = sec / 60
+        return duration > 0 ? "\(duration)min" : "\(sec) sec"
     }
 }
 
@@ -224,10 +228,14 @@ extension SearchResultsPresenter: SearchResultsInteractorOutput{
             searchResultGroup.leave()
         }
         
-        view?.hideResultsTableView()
-        view?.hideLoadingIndicator()
-        
-        view?.showErrorAlert(title: "Error", message: "Something went wrong!")
+        DispatchQueue.main.async {
+            
+            self.view?.hideResultsTableView()
+            self.view?.hideLoadingIndicator()
+            
+            self.view?.showErrorAlert(title: "Error", message: "Something went wrong!")
+        }
+       
     }
     
 }

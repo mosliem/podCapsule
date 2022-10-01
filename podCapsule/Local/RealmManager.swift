@@ -11,20 +11,23 @@ enum RealmError: Error{
     
     case AddError
     case ReadError
+    case DeleteError
     var errorMessage: String {
         
         switch self{
         case .AddError:
-            return "Something went wrong when adding information"
+            return "Something went wrong"
         case .ReadError:
             return "Couldn't get these data!"
+        case .DeleteError:
+            return "Couldn't remove this data"
         }
     }
 }
 
-class RealmManger{
+class RealmManager{
     
-    static let shared = RealmManger()
+    static let shared = RealmManager()
     private var realm = try! Realm()
     
     private init(){}
@@ -77,8 +80,18 @@ class RealmManger{
         
     }
     
-    
-    func add(object: Object, completion: @escaping(Bool) -> ()){
+    func add(object: Object, completion: @escaping(Result< Bool , Error>) -> ()){
+        
+        do {
+            
+            try realm.write{
+                realm.add(object, update: .modified)
+            }
+            completion(.success(true))
+        }
+        catch{
+            completion(.failure(RealmError.AddError))
+        }
         
     }
     
@@ -110,6 +123,43 @@ class RealmManger{
         }
         catch{
             throw RealmError.AddError
+        }
+    }
+    
+  
+     //MARK:- Read
+    
+    public func checkIfExist <T> (with id: String, type: T.Type, completion: @escaping(Bool) -> ()){
+        
+        let object = realm.objects(type as! Object.Type).filter("id = %@", id)
+        
+        if !object.isEmpty {
+            completion(true)
+        }
+        else{
+            completion(false)
+        }
+        
+    }
+    
+    //MARK:- Delete
+    
+    public func deleteObject <T> (with id: String, type: T.Type , completion: @escaping(Result<Bool, Error>) -> ()) {
+        
+        do{
+            
+            let object = realm.objects(type as! Object.Type).filter("id = %@", id)
+            
+            try realm.write {
+                realm.delete(object)
+            }
+            
+            completion(.success(true))
+    
+        }
+        
+        catch{
+            completion(.failure(RealmError.ReadError))
         }
     }
     
