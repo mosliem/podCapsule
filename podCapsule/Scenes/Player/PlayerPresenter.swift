@@ -17,11 +17,10 @@ class PlayerPresenter: PlayerViewPresenter {
     
     var episode: EpisodeObject?
     var audioPlayer: AudioPlayerSessionProtocol?
+    private var playedDuration: Double?
     
     var isPlaying: Bool = true
-    
     var isFinished: Bool = false
-    
     var isLoved: Bool = false
     
     weak var playerView: PlayerViewDelegate?
@@ -35,6 +34,15 @@ class PlayerPresenter: PlayerViewPresenter {
         self.audioPlayer = audioPlayer
     }
 
+    required init(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?, playedDuration: Double?) {
+        
+        self.episode = episode
+        self.view = view
+        self.interactor = interactor
+        self.router = router
+        self.audioPlayer = audioPlayer
+        self.playedDuration = playedDuration
+    }
     
     func viewDidLoad() {
         // set recently played
@@ -44,9 +52,14 @@ class PlayerPresenter: PlayerViewPresenter {
         setPlayerAudioURL()
         audioPlayer?.setupPlayer()
         
+        if playedDuration != nil, let playedDuration = playedDuration {
+            view?.updatePlaybackTime(time: formulateDuration(duration: Int(playedDuration)))
+            view?.updateSliderValue(value: Float(playedDuration))
+            audioPlayer?.seekToVal(value: playedDuration)
+            print(playedDuration)
+        }
+        
         checkIfLoved()
-        newRecentlyPlayedEpisode()
-    
     }
     
     func playPausePressed() {
@@ -90,6 +103,9 @@ class PlayerPresenter: PlayerViewPresenter {
     }
     
     func backPressed() {
+        audioPlayer?.pausePlaying()
+        audioPlayer?.getPLayedDuration()
+        newRecentlyPlayedEpisode()
         playerView?.playerViewWillDisappear()
         router?.dismissPlayerVC()
     }
@@ -158,7 +174,7 @@ extension PlayerPresenter{
 }
 
 extension PlayerPresenter: AudioPlayerUpdaterProtocol{
-    
+
     func error(with errorMessage: String) {
         
         view?.viewErrorAlert(title: "Error", message: errorMessage, actionTitle: "OK", actionHandler: { [weak self](_) in
@@ -184,11 +200,15 @@ extension PlayerPresenter: AudioPlayerUpdaterProtocol{
         view?.updatePlayPauseImage(with: "play.circle.fill")
         view?.updateSliderValue(value: 0)
         view?.updatePlaybackTime(time: "00:00")
-    }    
+    }
+    
+    func setPlayedDuration(duration: Double) {
+        self.playedDuration = duration
+    }
     
 }
 
-
+//MARK:- RecentlyPlayed episodes
 extension PlayerPresenter {
     
     
@@ -206,6 +226,7 @@ extension PlayerPresenter {
         recentlyPLayedEpisode.image = episode?.image
         recentlyPLayedEpisode.audio_length_sec = episode?.audio_length_sec ?? 0
         recentlyPLayedEpisode.title = episode?.title ?? ""
+        recentlyPLayedEpisode.playedDuration = playedDuration
         // podcast object
         let recentlyPlayedPodcast = RecentlyPlayedPodcastModel()
         
@@ -239,7 +260,7 @@ extension PlayerPresenter {
     
 }
 
-
+//MARK:- Loved episode function
 extension PlayerPresenter {
     
     private func setNonLovedEpisode(){

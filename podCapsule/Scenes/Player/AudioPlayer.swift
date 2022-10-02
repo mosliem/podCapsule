@@ -18,7 +18,6 @@ class AudioPlayer: AudioPlayerSessionProtocol {
     private var audioURL: URL?
     private var playbackTimeUpdater: Timer?
     
-    
     deinit {
         print("deinit audioplayer")
         self.audioSession = nil
@@ -37,7 +36,6 @@ class AudioPlayer: AudioPlayerSessionProtocol {
     func setupPlayer() {
         setupAudioSession()
         setupAudioPlayer()
-//        setupMusicNotificationCenterActions()
     }
     
     func startPlaying() {
@@ -60,6 +58,12 @@ class AudioPlayer: AudioPlayerSessionProtocol {
             }
         })
     }
+    
+    func getPLayedDuration() {
+        let duration = audioPlayer?.currentItem?.currentTime().seconds
+        presenter?.setPlayedDuration(duration: duration ?? 0)
+    }
+    
 }
 
 //MARK:- private functions 
