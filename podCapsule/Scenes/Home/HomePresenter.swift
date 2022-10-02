@@ -32,8 +32,13 @@ class HomePresenter: HomeViewPresenter{
         self.router = router
     }
     
+    func viewWillAppear(){
+        fetchGroup.enter()
+        fetchRecentlyPlayedEpisode()
+    }
+    
     func viewDidLoad() {
-        
+        print("viewDidLoad")
         getPreferences()
         fetchPodcasts()
         
@@ -43,12 +48,10 @@ class HomePresenter: HomeViewPresenter{
         
         fetchGroup.enter()
         fetchGroup.enter()
-        //        fetchGroup.enter()
         
-        //        networkInteractor?.fetchPopularPodcast()
+        networkInteractor?.fetchPopularPodcast()
         networkInteractor?.fetchRandomEpisodes()
-        //        fetchCategoriesPodcasts()
-        fetchRecentlyPlayedEpisode()
+        fetchCategoriesPodcasts()
         
         fetchGroup.notify(queue: .main){
             self.view?.reloadHomeCollectionView()
@@ -63,14 +66,10 @@ class HomePresenter: HomeViewPresenter{
     private func fetchCategoriesPodcasts(){
         
         for category in selectedCategories {
-            
             fetchGroup.enter()
             networkInteractor?.fetchBestForCategory(genre_id: category.categoryId, pageNum: 1, region: region!)
-            
         }
-        
     }
-    
     
     func numberOfSections() -> Int {
         return selectedCategories.count + 3
@@ -156,7 +155,7 @@ extension HomePresenter{
             
             let categoryName = selectedCategories[section - 3].categoryName
             
-            guard let categoryPodcasts = categoriesBestPodcasts[categoryName]  else {
+            guard let categoryPodcasts = categoriesBestPodcasts[categoryName] else {
                 return
             }
             
@@ -243,20 +242,11 @@ extension HomePresenter{
             let podcast = categoryPodcasts[row]
             let podcastDetails = convertTo(type: HomePodcastResponse.self, object: podcast, convertedType: PodcastObject.self)
             router?.moveToPodcastDetails(with: podcastDetails)
-            
-            /*
-             - create podcast details scence #
-             - podcast router function#
-             - create a convenience constructor for player to resume at recently played
-             - update recently played model with remaining min and resuming min
-             - create a method for player presenter to save recently with the remaining and starting min
-             */
         }
     }
     
     // Genric function to convert to player and podcast details models
     /// because of server model conflicts
-    
     private func convertTo <T,C> (type: T.Type, object: T, convertedType: C.Type) -> C {
         
         if type == RecentlyPlayedEpisodeModel.self {
@@ -347,7 +337,14 @@ extension HomePresenter: HomeLocalInteractorOutput{
             fetchGroup.leave()
         }
         self.recentlyPlayed = recentlyPlayed
+        view?.reloadHomeCollectionView()
     }
     
     
+}
+
+extension HomePresenter: PlayerViewDelegate {
+    func playerViewWillDisappear() {
+        viewWillAppear()
+    }
 }
