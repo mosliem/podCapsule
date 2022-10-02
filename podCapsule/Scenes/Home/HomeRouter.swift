@@ -30,6 +30,14 @@ class HomeRouter{
 
 extension HomeRouter: HomeViewRouter {
     
+    //for the particular case of continuing playing at a specific time of the recently played episode
+    func moveToPlayer(with recentlyPlayed: EpisodeObject, playedDuration: Double?){
+        let playerVC = PlayerRouter.create(with: recentlyPlayed, playedDuration: playedDuration)
+        playerVC.modalPresentationStyle = .overFullScreen
+        (playerVC as! PlayerView).presenter?.playerView = (HomeView as! HomeView).presenter as? PlayerViewDelegate
+        HomeView?.present(playerVC, animated: true)
+    }
+    
     func moveToPlayer(with episode: EpisodeObject) {
         let playerVC = PlayerRouter.create(with: episode)
         playerVC.modalPresentationStyle = .overFullScreen
