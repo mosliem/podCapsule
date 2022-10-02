@@ -15,10 +15,10 @@ class HomePresenter: HomeViewPresenter{
     
     private var region: String?
     private var selectedCategories = [CategoryModel]()
-    private var popularPodcasts = [PodcastObject]()
-    private var recentlyPlayed = [PodcastObject]()
-    private var randomEpisodes = [EpisodeObject]()
-    private var categoriesBestPodcasts = [String: [PodcastObject]]()
+    private var popularPodcasts = [HomePodcastResponse]()
+    private var recentlyPlayed = [RecentlyPlayedEpisodeModel]()
+    private var randomEpisodes = [RandomEpisodesResponse]()
+    private var categoriesBestPodcasts = [String: [HomePodcastResponse]]()
     
     private var fetchGroup = DispatchGroup()
     
@@ -33,17 +33,19 @@ class HomePresenter: HomeViewPresenter{
         
         getPreferences()
         fetchPodcasts()
-        
+
     }
     
     private func fetchPodcasts(){
         
         fetchGroup.enter()
-        fetchGroup.enter()
+//        fetchGroup.enter()
+//        fetchGroup.enter()
         
-        networkInteractor?.fetchPopularPodcast()
-        networkInteractor?.fetchRandomEpisodes()
-        fetchCategoriesPodcasts()
+//        networkInteractor?.fetchPopularPodcast()
+//        networkInteractor?.fetchRandomEpisodes()
+//        fetchCategoriesPodcasts()
+        fetchRecentlyPlayedEpisode()
         
         fetchGroup.notify(queue: .main){
             self.view?.reloadHomeCollectionView()
@@ -78,7 +80,7 @@ class HomePresenter: HomeViewPresenter{
             switch HomeSections.sectionForIndex(index: section){
             
             case .RecentlyPlayed:
-                return 0
+                return recentlyPlayed.count
             case .PopularPodcasts:
                 return popularPodcasts.count
             case .JustListen:
@@ -90,7 +92,6 @@ class HomePresenter: HomeViewPresenter{
             let categoryName = selectedCategories[section - 3].categoryName
             
             let categoryPodcasts = categoriesBestPodcasts[categoryName]
-            print(categoryName, categoryPodcasts?.count)
             return categoryPodcasts?.count ?? 0
         }
     }
@@ -121,6 +122,14 @@ class HomePresenter: HomeViewPresenter{
         }
     }
     
+    private func fetchRecentlyPlayedEpisode(){
+        localInteractor?.getRecentlyPlayed()
+    }
+}
+
+//MARK:- cell configuring
+
+extension HomePresenter{
     
     func configureCell<T> (at section: Int, for indexPath: Int, cell: T){
         
@@ -128,7 +137,9 @@ class HomePresenter: HomeViewPresenter{
             switch HomeSections.sectionForIndex(index: section) {
             
             case .RecentlyPlayed:
-                break
+                let cellData = recentlyPlayed[indexPath]
+                setRecentlyPlayedEpisodeDate(for: cell as! RecentlyPlayedCellView, cellData: cellData)
+                
             case .PopularPodcasts:
                 let cellData = popularPodcasts[indexPath]
                 setPodcastData(for: cell as! PodcastCellView, cellData: cellData)
@@ -151,36 +162,59 @@ class HomePresenter: HomeViewPresenter{
         }
     }
     
-    private func setPodcastData(for cell: PodcastCellView, cellData: PodcastObject){
+    private func setPodcastData(for cell: PodcastCellView, cellData: HomePodcastResponse){
         
         let title =  cellData.title
-        let image =  cellData.image
+        let imageURL =  cellData.image
         cell.displayName(for: title)
-        cell.displayPosterImage(urlString: image)
+        
+        if let imageURL = imageURL {
+          cell.displayPosterImage(urlString: imageURL)
+        }
+        
     }
     
-    private func setRandomEpisodeData(for cell: PodcastCellView,cellData: EpisodeObject){
+    private func setRandomEpisodeData(for cell: PodcastCellView,cellData: RandomEpisodesResponse){
         
         let title =  cellData.title
-        let image =  cellData.image
+        let imageURL = cellData.image
         cell.displayName(for: title)
-        cell.displayPosterImage(urlString: image)
+        
+        if let imageURL = imageURL {
+          cell.displayPosterImage(urlString: imageURL)
+        }
+        
+    }
+    // recntly played cell func
+    
+    private func setRecentlyPlayedEpisodeDate(for cell: RecentlyPlayedCellView, cellData: RecentlyPlayedEpisodeModel){
+        
+        let title = cellData.title
+        let imageURL = cellData.image
+    
+        cell.displayName(for: title)
+       
+        if let imageURL = imageURL {
+          cell.displayPosterImage(urlString: imageURL)
+        }
     }
     
 }
 
-
+//MARK:- results of the podcast from network interactor
 extension HomePresenter: HomeNetworkInteractorOutputProtocol{
     
-    func popularPodcastFetched(podcasts: [PodcastObject]) {
+    func popularPodcastFetched(podcasts: PopularPodcasts) {
         defer {
             fetchGroup.leave()
         }
         
-        popularPodcasts = podcasts.shuffled()
+        for podcast in podcasts.curated_lists{
+            popularPodcasts.append(contentsOf: podcast.podcasts)
+        }
     }
     
-    func randomEpisodesFetched(episodes: [EpisodeObject]) {
+    func randomEpisodesFetched(episodes: [RandomEpisodesResponse]) {
         defer {
             fetchGroup.leave()
         }
@@ -200,12 +234,14 @@ extension HomePresenter: HomeNetworkInteractorOutputProtocol{
         defer {
             fetchGroup.leave()
         }
+        
         let categoryName = podcasts.name
         categoriesBestPodcasts.updateValue(podcasts.podcasts, forKey: categoryName)
-        
     }
     
 }
+
+//MARK:- results of the local podcasts data
 
 extension HomePresenter: HomeLocalInteractorOutput{
     
@@ -222,5 +258,14 @@ extension HomePresenter: HomeLocalInteractorOutput{
         self.selectedCategories = categories
     }
     
+    func success(with recentlyPlayed: [RecentlyPlayedEpisodeModel]){
+        
+        defer {
+            fetchGroup.leave()
+        }
+        self.recentlyPlayed = recentlyPlayed
+        print(recentlyPlayed)
+    }
+
     
 }

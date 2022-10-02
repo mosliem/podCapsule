@@ -44,8 +44,8 @@ protocol HomeNetworkInteractorOutputProtocol: class {
     
     var networkInteractor: HomeNetworkInteractorInputProtocol? { get set }
     
-    func popularPodcastFetched(podcasts: [PodcastObject])
-    func randomEpisodesFetched(episodes: [EpisodeObject])
+    func popularPodcastFetched(podcasts: PopularPodcasts)
+    func randomEpisodesFetched(episodes: [RandomEpisodesResponse])
     func bestForCategoryFetched(podcasts: BestPodcastsObject)
     func failedWith(with error: Error)
     
@@ -57,6 +57,8 @@ protocol HomeLocalInteractorInput: class {
     
     func getCategories()
     func getRegion()
+    func getRecentlyPlayed()
+
 }
 
 protocol HomeLocalInteractorOutput: class {
@@ -65,6 +67,7 @@ protocol HomeLocalInteractorOutput: class {
     
     func success(with categories: [CategoryModel])
     func success(with country: String)
+    func success(with recentlyPlayed: [RecentlyPlayedEpisodeModel])
     func failed(with error: Error)
     
 }
@@ -76,7 +79,7 @@ protocol HomeCollectionReusableViewInput: class  {
 
 protocol RecentlyPlayedCellView: class {
     
-    func displayPosterImage(urlString: String?)
+    func displayPosterImage(urlString: String)
     func displayName(for episode: String)
     func displayRemainingTime(time: String)
     

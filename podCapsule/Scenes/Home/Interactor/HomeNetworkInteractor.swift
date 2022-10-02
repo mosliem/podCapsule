@@ -14,23 +14,14 @@ class HomeNetworkInteractor: HomeNetworkInteractorInputProtocol {
     
     func fetchPopularPodcast() {
         
-//        let endpoint =
+        let endpoint = HomeRequest.fetchPopularPodcastsList(pageNumber: 1)
         
-        NetworkManger.shared.callRequest(objectType: PopularPodcasts.self, endpoint: HomeRequest.fetchPopularPodcastsList(pageNumber: 1) ) { [weak self] (result) in
-            
+        NetworkManger.shared.callRequest(objectType: PopularPodcasts.self, endpoint: endpoint ) { [weak self] (result) in
+        
             switch result {
             
             case .success(let model):
-                var popularPodcasts: [PodcastObject] = []
-                
-                for podcasts in model.curated_lists {
-                    
-                    for podcast in podcasts.podcasts{
-                        
-                        popularPodcasts.append(podcast)
-                    }
-                }
-                self?.presenter?.popularPodcastFetched(podcasts: popularPodcasts)
+                self?.presenter?.popularPodcastFetched(podcasts: model)
                 
             case .failure(let error):
                 self?.presenter?.failedWith(with: error)
@@ -42,14 +33,14 @@ class HomeNetworkInteractor: HomeNetworkInteractorInputProtocol {
     
     func fetchRandomEpisodes() {
         
-        var episodeList = [EpisodeObject]()
+        var episodeList = [RandomEpisodesResponse]()
         let group = DispatchGroup()
         
         for _ in 0 ..< 5 {
             
             group.enter()
             
-            NetworkManger.shared.callRequest(objectType: EpisodeObject.self, endpoint: HomeRequest.fetchRandomEpisode) {[weak self] (result) in
+            NetworkManger.shared.callRequest(objectType: RandomEpisodesResponse.self, endpoint: HomeRequest.fetchRandomEpisode) {[weak self] (result) in
                 
                 defer {
                     group.leave()

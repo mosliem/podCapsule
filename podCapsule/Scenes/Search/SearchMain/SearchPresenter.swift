@@ -13,7 +13,7 @@ class SearchPresenter: SearchViewPresenter {
     var interactor: SearchInteractorInput?
     var router: SearchViewRouter?
     
-    private var suggestions = [PodcastObject]()
+    private var suggestions = [HomePodcastResponse]()
     
     required init(view: SearchView, interactor: SearchInteractorInput, router: SearchViewRouter) {
         self.view = view
@@ -38,14 +38,12 @@ class SearchPresenter: SearchViewPresenter {
          
         let cellData = suggestions[indexPath]
         
-        guard let imageURL = URL(string: cellData.image) else{
-            suggestions.remove(at: indexPath)
-            return
+        if let imageURL = URL(string: cellData.image ?? ""){
+            cell.displayPodcastPoster(imageUrl: imageURL)
         }
         
-        cell.displayTitle(podcastTitle: cellData.title)
-        cell.displayPodcastPoster(imageUrl: imageURL)
-        cell.displayPublisherName(publisher: cellData.publisher)
+        cell.displayTitle(podcastTitle: cellData.title )
+        cell.displayPublisherName(publisher: cellData.publisher )
     }
     
     func tableScrolled(with offset: Float) {
