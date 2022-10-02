@@ -26,22 +26,21 @@ class PlayerPresenter: PlayerViewPresenter {
     weak var playerView: PlayerViewDelegate?
     
     required init(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?) {
-    
-        self.episode = episode
-        self.view = view
-        self.interactor = interactor
-        self.router = router
-        self.audioPlayer = audioPlayer
+        setInitValues(view: view, interactor: interactor, router: router, episode: episode, audioPlayer: audioPlayer)
     }
 
     required init(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?, playedDuration: Double?) {
         
+        setInitValues(view: view, interactor: interactor, router: router, episode: episode, audioPlayer: audioPlayer, playedDuration: playedDuration)
+        self.playedDuration = playedDuration
+    }
+    
+    private func setInitValues(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?, playedDuration: Double? = 0){
         self.episode = episode
         self.view = view
         self.interactor = interactor
         self.router = router
         self.audioPlayer = audioPlayer
-        self.playedDuration = playedDuration
     }
     
     func viewDidLoad() {
