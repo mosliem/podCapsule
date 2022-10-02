@@ -14,5 +14,6 @@ class RecentlyPlayedEpisodeModel: Object{
     @Persisted var audioLink: String
     @Persisted var image: String?
     @Persisted var audio_length_sec: Int
+    @Persisted var playedDuration: Double? = 0
     @Persisted var podcast: RecentlyPlayedPodcastModel?
 }
