@@ -12,8 +12,10 @@ class HomePresenter: HomeViewPresenter{
     weak var view: HomeView?
     var networkInteractor: HomeNetworkInteractorInputProtocol?
     var localInteractor: HomeLocalInteractorInput?
+    var router: HomeViewRouter?
     
     private var region: String?
+    
     private var selectedCategories = [CategoryModel]()
     private var popularPodcasts = [HomePodcastResponse]()
     private var recentlyPlayed = [RecentlyPlayedEpisodeModel]()
@@ -23,28 +25,29 @@ class HomePresenter: HomeViewPresenter{
     private var fetchGroup = DispatchGroup()
     
     
-    required init(view: HomeView?, networkInteractor: HomeNetworkInteractorInputProtocol?, localInteractor: HomeLocalInteractorInput) {
+    required init(view: HomeView, networkInteractor: HomeNetworkInteractorInputProtocol, localInteractor: HomeLocalInteractorInput, router: HomeViewRouter) {
         self.view = view
         self.networkInteractor = networkInteractor
         self.localInteractor = localInteractor
+        self.router = router
     }
     
     func viewDidLoad() {
         
         getPreferences()
         fetchPodcasts()
-
+        
     }
     
     private func fetchPodcasts(){
         
         fetchGroup.enter()
-//        fetchGroup.enter()
-//        fetchGroup.enter()
+        fetchGroup.enter()
+        //        fetchGroup.enter()
         
-//        networkInteractor?.fetchPopularPodcast()
-//        networkInteractor?.fetchRandomEpisodes()
-//        fetchCategoriesPodcasts()
+        //        networkInteractor?.fetchPopularPodcast()
+        networkInteractor?.fetchRandomEpisodes()
+        //        fetchCategoriesPodcasts()
         fetchRecentlyPlayedEpisode()
         
         fetchGroup.notify(queue: .main){
@@ -169,7 +172,7 @@ extension HomePresenter{
         cell.displayName(for: title)
         
         if let imageURL = imageURL {
-          cell.displayPosterImage(urlString: imageURL)
+            cell.displayPosterImage(urlString: imageURL)
         }
         
     }
@@ -181,7 +184,7 @@ extension HomePresenter{
         cell.displayName(for: title)
         
         if let imageURL = imageURL {
-          cell.displayPosterImage(urlString: imageURL)
+            cell.displayPosterImage(urlString: imageURL)
         }
         
     }
@@ -190,18 +193,98 @@ extension HomePresenter{
     private func setRecentlyPlayedEpisodeDate(for cell: RecentlyPlayedCellView, cellData: RecentlyPlayedEpisodeModel){
         
         let title = cellData.title
-        let imageURL = cellData.image
-    
+        let imageURLString = cellData.image
+        
         cell.displayName(for: title)
-       
-        if let imageURL = imageURL {
-          cell.displayPosterImage(urlString: imageURL)
+        
+        if let imageURL = URL(string: imageURLString ?? "") {
+            cell.displayPosterImage(url: imageURL)
+        }
+        else{
+            cell.displayDefualtPoster(string: "EP")
         }
     }
     
 }
 
+//MARK:- Cell selection action logic
+extension HomePresenter{
+    
+    func cellSelected(at section: Int, row: Int) {
+        
+        if section < 3{
+            switch HomeSections.sectionForIndex(index: section) {
+            
+            case .RecentlyPlayed:
+                
+                let episode = recentlyPlayed[row]
+                let playerEpisode = convertTo(type: RecentlyPlayedEpisodeModel.self, object: episode, convertedType: EpisodeObject.self)
+                router?.moveToPlayer(with: playerEpisode)
+                
+            case .PopularPodcasts:
+                let podcast = popularPodcasts[row]
+                let podcastDetails = convertTo(type: HomePodcastResponse.self, object: podcast, convertedType: PodcastObject.self)
+                router?.moveToPodcastDetails(with: podcastDetails)
+            case .JustListen:
+                
+                let episode = randomEpisodes[row]
+                let playerEpisode = convertTo(type: RandomEpisodesResponse.self, object: episode, convertedType: EpisodeObject.self)
+                router?.moveToPlayer(with: playerEpisode)
+            }
+        }
+        else{
+            
+            let categoryName = selectedCategories[section - 3].categoryName
+            
+            guard let categoryPodcasts = categoriesBestPodcasts[categoryName]  else {
+                return
+            }
+            
+            let podcast = categoryPodcasts[row]
+            let podcastDetails = convertTo(type: HomePodcastResponse.self, object: podcast, convertedType: PodcastObject.self)
+            router?.moveToPodcastDetails(with: podcastDetails)
+            
+            /*
+             - create podcast details scence #
+             - podcast router function#
+             - create a convenience constructor for player to resume at recently played
+             - update recently played model with remaining min and resuming min
+             - create a method for player presenter to save recently with the remaining and starting min
+             */
+        }
+    }
+    
+    // Genric function to convert to player and podcast details models
+    /// because of server model conflicts
+    
+    private func convertTo <T,C> (type: T.Type, object: T, convertedType: C.Type) -> C {
+        
+        if type == RecentlyPlayedEpisodeModel.self {
+            
+            let object = object as! RecentlyPlayedEpisodeModel
+            let convertedObject = EpisodeObject(id: object.id, title: object.title, audio: object.audioLink, description: object.description, image: object.image, audio_length: object.audio_length_sec, podcast: nil)
+            return convertedObject as! C
+            
+        }
+        else if type == RandomEpisodesResponse.self {
+            
+            let object = object as! RandomEpisodesResponse
+            let convertedObject = EpisodeObject(id: object.id, title: object.title, audio: object.audio, description: object.description, image: object.image, audio_length: object.audio_length_sec)
+            
+            return convertedObject as! C
+        }
+        else{
+            
+            let object = object as! HomePodcastResponse
+            let convertedObject = PodcastObject(id: object.id, title: object.title, publisher: object.publisher, image: object.image, description: nil, total_episodes: nil, genre_ids: nil)
+            
+            return convertedObject as! C
+        }
+    }
+}
+
 //MARK:- results of the podcast from network interactor
+
 extension HomePresenter: HomeNetworkInteractorOutputProtocol{
     
     func popularPodcastFetched(podcasts: PopularPodcasts) {
@@ -264,8 +347,7 @@ extension HomePresenter: HomeLocalInteractorOutput{
             fetchGroup.leave()
         }
         self.recentlyPlayed = recentlyPlayed
-        print(recentlyPlayed)
     }
-
+    
     
 }

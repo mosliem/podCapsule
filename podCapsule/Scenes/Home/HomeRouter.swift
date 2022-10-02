@@ -36,8 +36,10 @@ extension HomeRouter: HomeViewRouter {
         HomeView?.present(playerVC, animated: true)
     }
     
-    func moveToPodcastDetails(with podcast: HomePodcastResponse) {
-        
+    func moveToPodcastDetails(with podcast: PodcastObject) {
+        let podcastDetailsVC = PodcastDetailsRouter.create(with: podcast)
+        podcastDetailsVC.modalPresentationStyle = .overFullScreen
+        HomeView?.present(podcastDetailsVC, animated: true)
     }
     
     

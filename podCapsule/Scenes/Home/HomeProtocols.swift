@@ -76,7 +76,8 @@ protocol HomeLocalInteractorOutput: class {
 protocol HomeViewRouter: class {
     
     func moveToPlayer(with episode: EpisodeObject)
-    func moveToPodcastDetails(with podcast: HomePodcastResponse)
+    func moveToPodcastDetails(with podcast: PodcastObject)
+    
 }
 
 protocol HomeCollectionReusableViewInput: class  {
