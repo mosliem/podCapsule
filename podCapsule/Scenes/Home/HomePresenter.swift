@@ -218,7 +218,7 @@ extension HomePresenter{
                 
                 let episode = recentlyPlayed[row]
                 let playerEpisode = convertTo(type: RecentlyPlayedEpisodeModel.self, object: episode, convertedType: EpisodeObject.self)
-                router?.moveToPlayer(with: playerEpisode)
+                router?.moveToPlayer(with: playerEpisode, playedDuration: episode.playedDuration)
                 
             case .PopularPodcasts:
                 let podcast = popularPodcasts[row]
