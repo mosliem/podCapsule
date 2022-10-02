@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+struct PodcastSearchResponse: Codable {
+    
+    let results: [PodcastObject]
+    
+}

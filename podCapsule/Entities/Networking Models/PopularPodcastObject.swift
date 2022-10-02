@@ -8,5 +8,5 @@
 import Foundation
 
 struct PopularPodcastObject: Codable {
-    let podcasts: [PodcastObject]
+    let podcasts: [HomePodcastResponse]
 }

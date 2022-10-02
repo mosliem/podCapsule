@@ -9,7 +9,7 @@ import Foundation
 
 struct BestPodcastsObject: Codable {
     
-    let id: Int
+    let id: Int?
     let name: String
-    let podcasts: [PodcastObject]
+    let podcasts: [HomePodcastResponse]
 }
