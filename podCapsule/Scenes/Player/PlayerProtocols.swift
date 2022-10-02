@@ -40,7 +40,8 @@ protocol PlayerViewPresenter: class {
     var view: PlayerView? { get set }
     var router: PlayerViewRouter? { get set }
     var episode: EpisodeObject? { get set }
- 
+    var playerView: PlayerViewDelegate? { get set }
+
     init(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?)
     
     func viewDidLoad()
@@ -103,4 +104,8 @@ protocol AudioPlayerSessionProtocol: class  {
     func pausePlaying()
     func seekToVal(value: Double)
 
+}
+
+protocol PlayerViewDelegate: class {
+    func playerViewWillDisappear()
 }

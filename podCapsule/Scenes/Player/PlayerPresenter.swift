@@ -24,14 +24,17 @@ class PlayerPresenter: PlayerViewPresenter {
     
     var isLoved: Bool = false
     
+    weak var playerView: PlayerViewDelegate?
+    
     required init(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?) {
-        
+    
         self.episode = episode
         self.view = view
         self.interactor = interactor
         self.router = router
         self.audioPlayer = audioPlayer
     }
+
     
     func viewDidLoad() {
         // set recently played
@@ -87,6 +90,7 @@ class PlayerPresenter: PlayerViewPresenter {
     }
     
     func backPressed() {
+        playerView?.playerViewWillDisappear()
         router?.dismissPlayerVC()
     }
     
@@ -198,15 +202,16 @@ extension PlayerPresenter {
         
         //episode object
         recentlyPLayedEpisode.id = id
-        recentlyPLayedEpisode.audioLink = episode?.audio
+        recentlyPLayedEpisode.audioLink = episode?.audio ?? ""
         recentlyPLayedEpisode.image = episode?.image
         recentlyPLayedEpisode.audio_length_sec = episode?.audio_length_sec ?? 0
         recentlyPLayedEpisode.title = episode?.title ?? ""
-        
         // podcast object
         let recentlyPlayedPodcast = RecentlyPlayedPodcastModel()
         
         guard let podcastId = episode?.podcast?.id else {
+            recentlyPLayedEpisode.podcast = nil
+            addNew(recentlyPlayed: recentlyPLayedEpisode)
             return
         }
         
