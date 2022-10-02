@@ -58,7 +58,7 @@ extension RecentlyPlayedCell: RecentlyPlayedCellView{
     }
     
     func displayRemainingTime(time: String) {
-        
+        remainingTimeLabel.text = time
     }
    
     func displayDefualtPoster(string: String) {

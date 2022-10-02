@@ -15,6 +15,7 @@ class HomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setupNavigationBarAppearance()
+        presenter?.viewWillAppear()
     }
     
     override func viewDidLoad() {
@@ -23,7 +24,6 @@ class HomeVC: UIViewController {
         configureHomeCollectionView()
         presenter?.viewDidLoad()
     }
-    
     
    private func setupNavigationBarAppearance(){
     
@@ -52,6 +52,7 @@ class HomeVC: UIViewController {
         
         homeCollectionView?.frame = CGRect(x: 10, y: 0, width: view.bounds.width , height: view.bounds.height)
         homeCollectionView?.backgroundColor = .clear
+        
         view.addSubview(homeCollectionView!)
         
     }
@@ -89,15 +90,16 @@ extension HomeVC{
             )
         ]
         
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95), heightDimension: .absolute(115))
+        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(0.95), heightDimension: .absolute(100))
         
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         item.contentInsets = NSDirectionalEdgeInsets(top: 4, leading: 0 , bottom: 4, trailing: 5)
         
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(115))
-        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item])
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(200))
+        let group = NSCollectionLayoutGroup.vertical(layoutSize: groupSize, subitems: [item,item])
         
         let section = NSCollectionLayoutSection(group: group)
+        section.orthogonalScrollingBehavior = .groupPaging
         section.boundarySupplementaryItems = sectionHeader
         return section
     }
