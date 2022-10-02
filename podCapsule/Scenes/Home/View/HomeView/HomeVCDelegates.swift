@@ -10,6 +10,7 @@ import UIKit
 extension HomeVC: HomeView{
     
     func reloadHomeCollectionView() {
+        print("reloaded")
         DispatchQueue.main.async {
             self.homeCollectionView?.reloadData()
         }
@@ -36,7 +37,7 @@ extension HomeVC: UICollectionViewDataSource , UICollectionViewDelegate, UIColle
         
         case 0:
              cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentlyPlayedCell.identifier, for: indexPath) as! RecentlyPlayedCell
-            
+            presenter?.configureCell(at: indexPath.section, for: indexPath.row, cell: cell)
             return cell
         
         default:
@@ -54,5 +55,14 @@ extension HomeVC: UICollectionViewDataSource , UICollectionViewDelegate, UIColle
         return header
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+
+        collectionView.deselectItem(at: indexPath, animated: true)
+        let row = indexPath.row
+        let section = indexPath.section
+        
+        presenter?.cellSelected(at: section, row: row)
+        
+    }
 
 }
