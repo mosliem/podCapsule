@@ -18,8 +18,9 @@ protocol HomeView: class {
 protocol HomeViewPresenter: class {
     
     var view: HomeView? { get set }
+    var router: HomeViewRouter? { get set }
     
-    init(view: HomeView?, networkInteractor: HomeNetworkInteractorInputProtocol?, localInteractor: HomeLocalInteractorInput)
+    init(view: HomeView, networkInteractor: HomeNetworkInteractorInputProtocol, localInteractor: HomeLocalInteractorInput, router: HomeViewRouter)
     func viewDidLoad()
     
     func numberOfSections() -> Int
@@ -27,7 +28,7 @@ protocol HomeViewPresenter: class {
     func titleForSection(for section: Int, header: HomeCollectionReusableViewInput)
     func configureCell<T> (at section: Int, for indexPath: Int, cell: T)
     func heightForRecentlyPlay() -> Double
-    
+    func cellSelected(at section: Int, row: Int)
 }
 
 
@@ -72,6 +73,12 @@ protocol HomeLocalInteractorOutput: class {
     
 }
 
+protocol HomeViewRouter: class {
+    
+    func moveToPlayer(with episode: EpisodeObject)
+    func moveToPodcastDetails(with podcast: HomePodcastResponse)
+}
+
 protocol HomeCollectionReusableViewInput: class  {
     
     func dispalySectionTitle(text: String)
@@ -79,7 +86,8 @@ protocol HomeCollectionReusableViewInput: class  {
 
 protocol RecentlyPlayedCellView: class {
     
-    func displayPosterImage(urlString: String)
+    func displayPosterImage(url: URL?)
+    func displayDefualtPoster(string: String)
     func displayName(for episode: String)
     func displayRemainingTime(time: String)
     
