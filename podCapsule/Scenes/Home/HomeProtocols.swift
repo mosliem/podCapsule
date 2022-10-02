@@ -22,6 +22,8 @@ protocol HomeViewPresenter: class {
     
     init(view: HomeView, networkInteractor: HomeNetworkInteractorInputProtocol, localInteractor: HomeLocalInteractorInput, router: HomeViewRouter)
     func viewDidLoad()
+    func viewWillAppear()
+
     
     func numberOfSections() -> Int
     func itemsForSection(for section: Int) -> Int
@@ -75,9 +77,9 @@ protocol HomeLocalInteractorOutput: class {
 
 protocol HomeViewRouter: class {
     
+    func moveToPlayer(with recentlyPlayed: EpisodeObject, playedDuration: Double?)
     func moveToPlayer(with episode: EpisodeObject)
     func moveToPodcastDetails(with podcast: PodcastObject)
-    
 }
 
 protocol HomeCollectionReusableViewInput: class  {
