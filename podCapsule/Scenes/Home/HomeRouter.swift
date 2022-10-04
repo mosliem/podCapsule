@@ -47,8 +47,8 @@ extension HomeRouter: HomeViewRouter {
     
     func moveToPodcastDetails(with podcast: PodcastObject) {
         let podcastDetailsVC = PodcastDetailsRouter.create(with: podcast)
-        podcastDetailsVC.modalPresentationStyle = .overFullScreen
-        HomeView?.present(podcastDetailsVC, animated: true)
+        podcastDetailsVC.navigationItem.largeTitleDisplayMode = .never
+        HomeView?.navigationController?.pushViewController(podcastDetailsVC, animated: true)
     }
     
     
