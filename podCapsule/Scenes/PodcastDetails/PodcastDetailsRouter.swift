@@ -32,4 +32,14 @@ class PodcastDetailsRouter {
 
 extension PodcastDetailsRouter: PodcastDetailsViewRouter {
     
+    func moveToPlayer(with episode: EpisodeObject){
+        
+        let playerVC = PlayerRouter.create(with: episode)
+        playerVC.modalPresentationStyle = .overFullScreen
+        podcastDetailsView?.present(playerVC, animated: true)
+    }
+    
+    func popViewController(){
+        podcastDetailsView?.navigationController?.popViewController(animated: true)
+    }
 }

@@ -39,8 +39,9 @@ protocol PodcastDetailsViewPresenter: class {
     func viewDidLoad()
     
     func tableViewCount() -> Int
-    func configureCell(at indexPath: Int)
+    func configureCell(at indexPath: Int, for cell: PodcastDetailsEpisodesCellProtocol)
     
+    func didSelectCell(at indexPath: Int)
 }
 
 protocol PodcastDetailsInteractorInput: class {
@@ -60,7 +61,8 @@ protocol PodcastDetailsInteractorOutput: class {
 }
 
 protocol PodcastDetailsViewRouter: class {
-
+    func moveToPlayer(with episode: EpisodeObject)
+    func popViewController()
 }
 
 protocol PodcastDetailsEpisodesCellProtocol: class {
