@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class PodcastDetailsEpisodesTableViewCell: UITableViewCell {
 
@@ -25,7 +26,6 @@ class PodcastDetailsEpisodesTableViewCell: UITableViewCell {
     func roundEpisodeImageView(){
         episodeImageView.clipsToBounds = true
         episodeImageView.layer.cornerRadius = 15
-        
         imageShadowView.layer.cornerRadius = 15
     }
     
@@ -35,5 +35,19 @@ class PodcastDetailsEpisodesTableViewCell: UITableViewCell {
         imageShadowView.layer.shadowOpacity = 0.4
         imageShadowView.layer.shadowOffset = CGSize(width: 0, height: 2.5)
     }
+    
+}
+
+
+extension PodcastDetailsEpisodesTableViewCell: PodcastDetailsEpisodesCellProtocol{
+    
+    func displayEpisodeImage(with url: URL?) {
+        episodeImageView.sd_setImage(with: url)
+    }
+    
+    func displayEpisode(title: String) {
+        titleLabel.text = title
+    }
+    
     
 }
