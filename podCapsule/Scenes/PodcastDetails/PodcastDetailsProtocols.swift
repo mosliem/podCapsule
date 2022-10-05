@@ -63,3 +63,9 @@ protocol PodcastDetailsViewRouter: class {
 
 }
 
+protocol PodcastDetailsEpisodesCellProtocol: class {
+    
+    func displayEpisodeImage(with url: URL?)
+    func displayEpisode(title: String)
+}
+
