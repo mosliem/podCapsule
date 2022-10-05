@@ -94,6 +94,7 @@ protocol AudioPlayerUpdaterProtocol: class {
     func updatesCurrentPlaybackTime(value: Double?)
     
     func didFinishPlaying()
+    func setPlayedDuration(duration: Double)
 }
 
 protocol AudioPlayerSessionProtocol: class  {

@@ -54,7 +54,6 @@ class PlayerPresenter: PlayerViewPresenter {
             view?.updatePlaybackTime(time: formulateDuration(duration: Int(playedDuration)))
             view?.updateSliderValue(value: Float(playedDuration))
             audioPlayer?.seekToVal(value: playedDuration)
-            print(playedDuration)
         }
         
         checkIfLoved()
@@ -198,6 +197,10 @@ extension PlayerPresenter: AudioPlayerUpdaterProtocol{
         view?.updatePlayPauseImage(with: "play.circle.fill")
         view?.updateSliderValue(value: 0)
         view?.updatePlaybackTime(time: "00:00")
+    }
+    
+    func setPlayedDuration(duration: Double) {
+        self.playedDuration = duration
     }
     
 }
