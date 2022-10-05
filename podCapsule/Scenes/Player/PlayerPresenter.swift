@@ -30,7 +30,6 @@ class PlayerPresenter: PlayerViewPresenter {
     }
 
     required init(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?, playedDuration: Double?) {
-        
         setInitValues(view: view, interactor: interactor, router: router, episode: episode, audioPlayer: audioPlayer, playedDuration: playedDuration)
         self.playedDuration = playedDuration
     }
@@ -199,10 +198,6 @@ extension PlayerPresenter: AudioPlayerUpdaterProtocol{
         view?.updatePlayPauseImage(with: "play.circle.fill")
         view?.updateSliderValue(value: 0)
         view?.updatePlaybackTime(time: "00:00")
-    }
-    
-    func setPlayedDuration(duration: Double) {
-        self.playedDuration = duration
     }
     
 }

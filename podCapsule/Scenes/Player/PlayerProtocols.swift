@@ -44,6 +44,8 @@ protocol PlayerViewPresenter: class {
 
     init(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?)
     
+    init(view: PlayerView?, interactor: PlayerInteractorInput?, router: PlayerViewRouter?, episode: EpisodeObject?, audioPlayer: AudioPlayerSessionProtocol?, playedDuration: Double?)
+    
     func viewDidLoad()
     func playPausePressed()
     func backwardPressed(currentTime: Float)
@@ -92,7 +94,6 @@ protocol AudioPlayerUpdaterProtocol: class {
     func updatesCurrentPlaybackTime(value: Double?)
     
     func didFinishPlaying()
-
 }
 
 protocol AudioPlayerSessionProtocol: class  {
@@ -103,6 +104,7 @@ protocol AudioPlayerSessionProtocol: class  {
     func startPlaying()
     func pausePlaying()
     func seekToVal(value: Double)
+    func getPLayedDuration()
 
 }
 
