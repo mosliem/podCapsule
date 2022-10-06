@@ -47,11 +47,11 @@ class HomePresenter: HomeViewPresenter{
     private func fetchPodcasts(){
         
         fetchGroup.enter()
-        fetchGroup.enter()
-        
+//        fetchGroup.enter()
+//        
         networkInteractor?.fetchPopularPodcast()
-        networkInteractor?.fetchRandomEpisodes()
-        fetchCategoriesPodcasts()
+//        networkInteractor?.fetchRandomEpisodes()
+//        fetchCategoriesPodcasts()
         
         fetchGroup.notify(queue: .main){
             self.view?.reloadHomeCollectionView()
@@ -196,6 +196,15 @@ extension HomePresenter{
         
         cell.displayName(for: title)
         
+        let remainingDuration = cellData.audio_length_sec - Int(cellData.playedDuration ?? 0)
+        
+        if remainingDuration > 0 && remainingDuration / 60 > 0 {
+            cell.displayRemainingTime(time: String(remainingDuration / 60) + " mins remaining")
+        }
+        else if remainingDuration > 0 && remainingDuration / 60 < 0 {
+            cell.displayRemainingTime(time:"less than min remaining")
+        }
+        
         if let imageURL = URL(string: imageURLString ?? "") {
             cell.displayPosterImage(url: imageURL)
         }
@@ -252,7 +261,15 @@ extension HomePresenter{
         if type == RecentlyPlayedEpisodeModel.self {
             
             let object = object as! RecentlyPlayedEpisodeModel
-            let convertedObject = EpisodeObject(id: object.id, title: object.title, audio: object.audioLink, description: object.description, image: object.image, audio_length: object.audio_length_sec, podcast: nil)
+    
+            let podcast = object.podcast!
+     
+            var genres = [Int]()
+            genres = podcast.genre_ids.toArray(type: Int.self)
+            
+            let podcastObject = PodcastObject(id: podcast.id, title: podcast.title, publisher: podcast.publisher ?? "", image: podcast.image, description: podcast.description, total_episodes: podcast.total_episodes, genre_ids: genres)
+            
+            let convertedObject = EpisodeObject(id: object.id, title: object.title, audio: object.audioLink, description: object.description, image: object.image, audio_length: object.audio_length_sec, podcast: podcastObject)
             return convertedObject as! C
             
         }
@@ -266,7 +283,7 @@ extension HomePresenter{
         else{
             
             let object = object as! HomePodcastResponse
-            let convertedObject = PodcastObject(id: object.id, title: object.title, publisher: object.publisher, image: object.image, description: nil, total_episodes: nil, genre_ids: nil)
+            let convertedObject = PodcastObject(id: object.id ?? "", title: object.title, publisher: object.publisher, image: object.image, description: nil, total_episodes: nil, genre_ids: nil)
             
             return convertedObject as! C
         }
@@ -323,6 +340,9 @@ extension HomePresenter: HomeLocalInteractorOutput{
     }
     
     func failed(with error: Error) {
+        defer {
+            fetchGroup.leave()
+        }
         print(error.localizedDescription)
     }
     
