@@ -8,7 +8,6 @@
 import Foundation
 
 struct BestPodcastsObject: Codable {
-    
     let id: Int?
     let name: String
     let podcasts: [HomePodcastResponse]
