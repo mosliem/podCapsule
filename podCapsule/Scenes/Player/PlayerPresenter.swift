@@ -93,9 +93,11 @@ class PlayerPresenter: PlayerViewPresenter {
         
         if isLoved{
             setNonLovedEpisode()
+            removeFromLoved()
         }
         else{
-          setLovedEpisode()
+           setLovedEpisode()
+           addToLoved()
         }
     }
     
@@ -227,13 +229,8 @@ extension PlayerPresenter {
         // podcast object
         let recentlyPlayedPodcast = RecentlyPlayedPodcastModel()
         
-        guard let podcastId = episode?.podcast?.id else {
-            recentlyPLayedEpisode.podcast = nil
-            addNew(recentlyPlayed: recentlyPLayedEpisode)
-            return
-        }
         
-        recentlyPlayedPodcast.id = podcastId
+        recentlyPlayedPodcast.id = episode?.podcast?.id ?? ""
         recentlyPlayedPodcast.title = episode?.podcast?.title ?? ""
         recentlyPlayedPodcast.image = episode?.podcast?.image
         recentlyPlayedPodcast.info = episode?.podcast?.description
@@ -263,13 +260,11 @@ extension PlayerPresenter {
     private func setNonLovedEpisode(){
         isLoved = false
         view?.updateLoveButton(with: "heart")
-        removeFromLoved()
     }
     
     private func setLovedEpisode(){
         isLoved = true
         view?.updateLoveButton(with: "heart.fill")
-        addToLoved()
     }
     
     
@@ -310,12 +305,8 @@ extension PlayerPresenter {
 extension PlayerPresenter: PlayerInteractorOutput{
     
     func existedInLovedList(existed: Bool){
-        
         if existed {
             setLovedEpisode()
-        }
-        else{
-            setNonLovedEpisode()
         }
     }
     
