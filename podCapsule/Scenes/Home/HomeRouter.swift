@@ -9,7 +9,7 @@ import UIKit
 
 class HomeRouter{
     
-    var HomeView: UIViewController?
+    var homeVC: UIViewController?
     
     static func create() -> UIViewController {
         
@@ -23,7 +23,7 @@ class HomeRouter{
         view.presenter = presenter
         networkInteractor.presenter = presenter
         localInteractor.presenter = presenter
-        router.HomeView = view
+        router.homeVC = view
         return view
     }
 }
@@ -34,21 +34,22 @@ extension HomeRouter: HomeViewRouter {
     func moveToPlayer(with recentlyPlayed: EpisodeObject, playedDuration: Double?){
         let playerVC = PlayerRouter.create(with: recentlyPlayed, playedDuration: playedDuration)
         playerVC.modalPresentationStyle = .overFullScreen
-        (playerVC as! PlayerView).presenter?.playerView = (HomeView as! HomeView).presenter as? PlayerViewDelegate
-        HomeView?.present(playerVC, animated: true)
+        (playerVC as! PlayerView).presenter?.playerView = (homeVC as! HomeView).presenter as? PlayerViewDelegate
+        homeVC?.present(playerVC, animated: true)
     }
     
     func moveToPlayer(with episode: EpisodeObject) {
         let playerVC = PlayerRouter.create(with: episode)
-        playerVC.modalPresentationStyle = .overFullScreen
-        (playerVC as! PlayerView).presenter?.playerView = (HomeView as! HomeView).presenter as? PlayerViewDelegate 
-        HomeView?.present(playerVC, animated: true)
+         playerVC.modalPresentationStyle = .overFullScreen
+        (playerVC as! PlayerView).presenter?.playerView = (homeVC as! HomeView).presenter as? PlayerViewDelegate 
+        homeVC?.present(playerVC, animated: true)
     }
     
     func moveToPodcastDetails(with podcast: PodcastObject) {
         let podcastDetailsVC = PodcastDetailsRouter.create(with: podcast)
+        (podcastDetailsVC as! PodcastDetailsView).presenter?.podcastViewDelegate = (homeVC as! HomeView).presenter as? PodcastViewDelegate
         podcastDetailsVC.navigationItem.largeTitleDisplayMode = .never
-        HomeView?.navigationController?.pushViewController(podcastDetailsVC, animated: true)
+        homeVC?.navigationController?.pushViewController(podcastDetailsVC, animated: true)
     }
     
     
