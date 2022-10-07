@@ -9,13 +9,29 @@ import UIKit
 
 extension HomeVC: HomeView{
     
-    func reloadHomeCollectionView() {
-        print("reloaded")
-        DispatchQueue.main.async {
-            self.homeCollectionView?.reloadData()
-        }
+    func showLoader() {
+        self.showIndicator()
     }
     
+    func hideLoader() {
+        self.hideIndicator()
+    }
+    
+    func addRecentlyPlayedSection() {
+        homeSectionsLayout.insert(createRecentlyPlayedSection(), at: 0)
+    }
+    
+    func addPodcastSection() {
+        homeSectionsLayout.append(createPodcastsSection())
+    }
+    
+    func assignCollectionViewLayout(){
+        homeCollectionView?.collectionViewLayout = self.createLayout()
+    }
+    
+    func reloadHomeCollectionView() {
+        self.homeCollectionView?.reloadData()
+    }
     
 }
 
@@ -31,23 +47,13 @@ extension HomeVC: UICollectionViewDataSource , UICollectionViewDelegate, UIColle
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        var cell: UICollectionViewCell
         
-        switch indexPath.section{
-        
-        case 0:
-             cell = collectionView.dequeueReusableCell(withReuseIdentifier: RecentlyPlayedCell.identifier, for: indexPath) as! RecentlyPlayedCell
-            presenter?.configureCell(at: indexPath.section, for: indexPath.row, cell: cell)
-            return cell
-        
-        default:
-            cell = collectionView.dequeueReusableCell(withReuseIdentifier: PodcastCell.identifier, for: indexPath) as! PodcastCell
-            presenter?.configureCell(at: indexPath.section, for: indexPath.row, cell: cell)
-            return cell
-        }
-        
+        let cell = collectionView.dequeue((presenter?.cellType(for: indexPath.section))!, for: indexPath)
+        presenter?.configureCell(at: indexPath.section, for: indexPath.row, cell: cell)
+        return cell
     }
 
+    
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         
         let header = homeCollectionView?.dequeueReusableSupplementaryView(ofKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeSectionsCollectionReusableView.identifier, for: indexPath) as! HomeSectionsCollectionReusableView

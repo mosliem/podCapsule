@@ -13,6 +13,11 @@ protocol HomeView: class {
     
     func reloadHomeCollectionView()
 
+    func addRecentlyPlayedSection()
+    func addPodcastSection()
+    func assignCollectionViewLayout()
+    func showLoader()
+    func hideLoader()
 }
 
 protocol HomeViewPresenter: class {
@@ -22,14 +27,15 @@ protocol HomeViewPresenter: class {
     
     init(view: HomeView, networkInteractor: HomeNetworkInteractorInputProtocol, localInteractor: HomeLocalInteractorInput, router: HomeViewRouter)
     func viewDidLoad()
-    func viewWillAppear()
-
     
     func numberOfSections() -> Int
     func itemsForSection(for section: Int) -> Int
     func titleForSection(for section: Int, header: HomeCollectionReusableViewInput)
+   
+    func cellType<T>(for section: Int) -> T
+    
     func configureCell<T> (at section: Int, for indexPath: Int, cell: T)
-    func heightForRecentlyPlay() -> Double
+   
     func cellSelected(at section: Int, row: Int)
 }
 

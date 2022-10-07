@@ -10,17 +10,19 @@ import UIKit
 class HomeVC: UIViewController {
     
     var presenter: HomeViewPresenter?
-    var homeCollectionView: UICollectionView?
+    
+    internal var homeCollectionView: UICollectionView?
+    
+    internal var homeSectionsLayout = [NSCollectionLayoutSection]()
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setupNavigationBarAppearance()
-        presenter?.viewWillAppear()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        title = "Home"
+
         configureHomeCollectionView()
         presenter?.viewDidLoad()
     }
@@ -33,13 +35,13 @@ class HomeVC: UIViewController {
         
         appearance.titleTextAttributes = attributes
         appearance.largeTitleTextAttributes = attributes
-        
+        navigationItem.title = "Home"
         navigationController?.navigationBar.standardAppearance = appearance
-    }
+   }
     
-    private func configureHomeCollectionView(){
+    internal func configureHomeCollectionView(){
         
-        homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: createLayout())
+        homeCollectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
         
         homeCollectionView?.register(UINib(nibName: PodcastCell.identifier, bundle: nil), forCellWithReuseIdentifier: PodcastCell.identifier)
         
@@ -50,25 +52,16 @@ class HomeVC: UIViewController {
         homeCollectionView?.delegate = self
         homeCollectionView?.dataSource = self
         
-        homeCollectionView?.frame = CGRect(x: 10, y: 0, width: view.bounds.width , height: view.bounds.height)
+        homeCollectionView?.frame = CGRect(x: 10, y: 0, width: view.bounds.width , height: view.bounds.height )
         homeCollectionView?.backgroundColor = .clear
-        
         view.addSubview(homeCollectionView!)
-        
     }
     
-    private  func createLayout() -> UICollectionViewLayout {
+    internal  func createLayout() -> UICollectionViewLayout {
         
-        let layout = UICollectionViewCompositionalLayout {  (sectionIndex, _) -> NSCollectionLayoutSection? in
-            
-            switch sectionIndex{
-            case 0:
-                return self.createRecentlyPlayedSection()
-            default:
-                return self.createPodcastsSection()
-            }
+        let layout = UICollectionViewCompositionalLayout { [weak self] (sectionIndex, _) -> NSCollectionLayoutSection? in
+            return self?.homeSectionsLayout[sectionIndex]
         }
-        
         return layout
     }
     
@@ -79,12 +72,10 @@ class HomeVC: UIViewController {
 extension HomeVC{
     func createRecentlyPlayedSection() -> NSCollectionLayoutSection {
         
-        let sectionHeaderHeight = CGFloat((presenter!.heightForRecentlyPlay()))
-        
         let sectionHeader = [
             NSCollectionLayoutBoundarySupplementaryItem(
                 layoutSize: NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0),
-                                                   heightDimension: .absolute(sectionHeaderHeight)),
+                                                   heightDimension: .absolute(60)),
                 elementKind: UICollectionView.elementKindSectionHeader,
                 alignment: .top
             )

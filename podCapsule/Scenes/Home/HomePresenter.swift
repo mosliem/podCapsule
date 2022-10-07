@@ -8,7 +8,7 @@
 import Foundation
 
 class HomePresenter: HomeViewPresenter{
-    
+
     weak var view: HomeView?
     var networkInteractor: HomeNetworkInteractorInputProtocol?
     var localInteractor: HomeLocalInteractorInput?
@@ -24,6 +24,8 @@ class HomePresenter: HomeViewPresenter{
     
     private var fetchGroup = DispatchGroup()
     
+    private var sections = [String]()
+    private var addedSection = [String: Bool]()
     
     required init(view: HomeView, networkInteractor: HomeNetworkInteractorInputProtocol, localInteractor: HomeLocalInteractorInput, router: HomeViewRouter) {
         self.view = view
@@ -34,28 +36,50 @@ class HomePresenter: HomeViewPresenter{
     
     func viewWillAppear(){
         fetchGroup.enter()
-        fetchRecentlyPlayedEpisode()
+        localInteractor?.getRecentlyPlayed()
+        setViewSectionsLayout()
     }
     
     func viewDidLoad() {
-        print("viewDidLoad")
+        view?.showLoader()
         getPreferences()
         fetchPodcasts()
-        
     }
     
     private func fetchPodcasts(){
         
         fetchGroup.enter()
-//        fetchGroup.enter()
-//        
+        fetchGroup.enter()
+        
+        localInteractor?.getRecentlyPlayed()
         networkInteractor?.fetchPopularPodcast()
-//        networkInteractor?.fetchRandomEpisodes()
-//        fetchCategoriesPodcasts()
+        networkInteractor?.fetchRandomEpisodes()
+        fetchCategoriesPodcasts()
         
         fetchGroup.notify(queue: .main){
-            self.view?.reloadHomeCollectionView()
+            self.setViewSectionsLayout()
         }
+    }
+    
+    private func setViewSectionsLayout(){
+        var allSections = sections
+
+        if !sections.isEmpty && addedSection[sections[0]] == nil && sections[0] == "Recently Played"{
+            addedSection.updateValue(true, forKey: sections[0])
+            view?.addRecentlyPlayedSection()
+            allSections.remove(at: 0)
+        }
+        
+        for section in allSections {
+            if addedSection[section] == nil{
+                addedSection.updateValue(true, forKey: section)
+                view?.addPodcastSection()
+            }
+        }
+        
+        view?.assignCollectionViewLayout()
+        view?.reloadHomeCollectionView()
+        view?.hideLoader()
     }
     
     private func getPreferences(){
@@ -72,61 +96,46 @@ class HomePresenter: HomeViewPresenter{
     }
     
     func numberOfSections() -> Int {
-        return selectedCategories.count + 3
+        return sections.count
     }
     
     func itemsForSection(for section: Int) -> Int {
         
-        if section < 3{
-            
-            switch HomeSections.sectionForIndex(index: section){
-            
-            case .RecentlyPlayed:
-                return recentlyPlayed.count
-            case .PopularPodcasts:
-                return popularPodcasts.count
-            case .JustListen:
-                return randomEpisodes.count
-            }
+        if sections[section] == "Recently Played"{
+            return recentlyPlayed.count
+        }
+        else if sections[section] == "Popular Podcasts"{
+            return popularPodcasts.count
+        }
+        else if sections[section] == "Just Listen"{
+            return randomEpisodes.count
         }
         else{
-            
-            let categoryName = selectedCategories[section - 3].categoryName
-            
-            let categoryPodcasts = categoriesBestPodcasts[categoryName]
-            return categoryPodcasts?.count ?? 0
+            let sectionName = sections[section]
+            return categoriesBestPodcasts[sectionName]?.count ?? 0
         }
     }
-    
-    func heightForRecentlyPlay() -> Double {
-        
-        if recentlyPlayed.count != 0{
-            return 60
-        }
-        else{
-            return 0
-        }
-    }
+
     
     func titleForSection(for section: Int, header: HomeCollectionReusableViewInput){
+        header.dispalySectionTitle(text: sections[section])
+    }
+    
+    func cellType<T>(for section: Int) -> T {
         
-        //Main sections
-        if section < 3{
-            let title = HomeSections.titleForIndex(index: section)  ?? ""
-            header.dispalySectionTitle(text: title)
+        if sections[section] == "Recently Played"{
+            return RecentlyPlayedCell.self as! T
         }
         else{
-            // categories sections
-            let index = section - 3
-            let title = selectedCategories[index].categoryName
-            header.dispalySectionTitle(text: title)
-            
+            return PodcastCell.self as! T
         }
+        
     }
     
     private func fetchRecentlyPlayedEpisode(){
         localInteractor?.getRecentlyPlayed()
     }
+    
 }
 
 //MARK:- cell configuring
@@ -134,27 +143,22 @@ class HomePresenter: HomeViewPresenter{
 extension HomePresenter{
     
     func configureCell<T> (at section: Int, for indexPath: Int, cell: T){
-        
-        if section < 3 {
-            switch HomeSections.sectionForIndex(index: section) {
-            
-            case .RecentlyPlayed:
-                let cellData = recentlyPlayed[indexPath]
-                setRecentlyPlayedEpisodeDate(for: cell as! RecentlyPlayedCellView, cellData: cellData)
-                
-            case .PopularPodcasts:
-                let cellData = popularPodcasts[indexPath]
-                setPodcastData(for: cell as! PodcastCellView, cellData: cellData)
-                
-            case .JustListen:
-                let cellData = randomEpisodes[indexPath]
-                setRandomEpisodeData(for: cell as! PodcastCellView, cellData: cellData)
-            }
+
+        if sections[section] == "Recently Played"{
+            let cellData = recentlyPlayed[indexPath]
+            setRecentlyPlayedEpisodeData(for: cell as! RecentlyPlayedCellView, cellData: cellData)
+        }
+        else if sections[section] == "Popular Podcasts"{
+            let cellData = popularPodcasts[indexPath]
+            setPodcastData(for: cell as! PodcastCellView, cellData: cellData)
+        }
+        else if sections[section] == "Just Listen"{
+            let cellData = randomEpisodes[indexPath]
+            setRandomEpisodeData(for: cell as! PodcastCellView, cellData: cellData)
         }
         else{
             
-            let categoryName = selectedCategories[section - 3].categoryName
-            
+            let categoryName = sections[section]
             guard let categoryPodcasts = categoriesBestPodcasts[categoryName] else {
                 return
             }
@@ -187,9 +191,9 @@ extension HomePresenter{
         }
         
     }
-    // recntly played cell func
     
-    private func setRecentlyPlayedEpisodeDate(for cell: RecentlyPlayedCellView, cellData: RecentlyPlayedEpisodeModel){
+    // recntly played cell func
+    private func setRecentlyPlayedEpisodeData(for cell: RecentlyPlayedCellView, cellData: RecentlyPlayedEpisodeModel){
         
         let title = cellData.title
         let imageURLString = cellData.image
@@ -219,32 +223,25 @@ extension HomePresenter{
 extension HomePresenter{
     
     func cellSelected(at section: Int, row: Int) {
-        
-        if section < 3{
-            switch HomeSections.sectionForIndex(index: section) {
-            
-            case .RecentlyPlayed:
-                
-                let episode = recentlyPlayed[row]
-                let playerEpisode = convertTo(type: RecentlyPlayedEpisodeModel.self, object: episode, convertedType: EpisodeObject.self)
-                router?.moveToPlayer(with: playerEpisode, playedDuration: episode.playedDuration)
-                
-            case .PopularPodcasts:
-                let podcast = popularPodcasts[row]
-                let podcastDetails = convertTo(type: HomePodcastResponse.self, object: podcast, convertedType: PodcastObject.self)
-                router?.moveToPodcastDetails(with: podcastDetails)
-            case .JustListen:
-                
-                let episode = randomEpisodes[row]
-                let playerEpisode = convertTo(type: RandomEpisodesResponse.self, object: episode, convertedType: EpisodeObject.self)
-                router?.moveToPlayer(with: playerEpisode)
-            }
+        if sections[section] == "Recently Played"{
+            let episode = recentlyPlayed[row]
+            let playerEpisode = convertTo(type: RecentlyPlayedEpisodeModel.self, object: episode, convertedType: EpisodeObject.self)
+            router?.moveToPlayer(with: playerEpisode, playedDuration: episode.playedDuration)
+        }
+        else if sections[section] == "Just Listen"{
+            let episode = randomEpisodes[row]
+            let playerEpisode = convertTo(type: RandomEpisodesResponse.self, object: episode, convertedType: EpisodeObject.self)
+            router?.moveToPlayer(with: playerEpisode)
+        }
+        else if sections[section] == "Popular Podcasts"{
+            let podcast = popularPodcasts[row]
+            let podcastDetails = convertTo(type: HomePodcastResponse.self, object: podcast, convertedType: PodcastObject.self)
+            router?.moveToPodcastDetails(with: podcastDetails)
         }
         else{
             
-            let categoryName = selectedCategories[section - 3].categoryName
-            
-            guard let categoryPodcasts = categoriesBestPodcasts[categoryName]  else {
+            let categoryName = sections[section]
+            guard let categoryPodcasts = categoriesBestPodcasts[categoryName] else {
                 return
             }
             
@@ -276,7 +273,10 @@ extension HomePresenter{
         else if type == RandomEpisodesResponse.self {
             
             let object = object as! RandomEpisodesResponse
-            let convertedObject = EpisodeObject(id: object.id, title: object.title, audio: object.audio, description: object.description, image: object.image, audio_length: object.audio_length_sec)
+            let podcast = object.podcast!
+            let podcastObject = PodcastObject(id: podcast.id, title: podcast.title, publisher: podcast.publisher, image: podcast.image, description: nil, total_episodes: nil, genre_ids: nil)
+            
+            let convertedObject = EpisodeObject(id: object.id, title: object.title, audio: object.audio, description: object.description, image: object.image, audio_length: object.audio_length_sec, podcast: podcastObject)
             
             return convertedObject as! C
         }
@@ -302,6 +302,8 @@ extension HomePresenter: HomeNetworkInteractorOutputProtocol{
         for podcast in podcasts.curated_lists{
             popularPodcasts.append(contentsOf: podcast.podcasts)
         }
+ 
+        sections.append("Popular Podcasts")
     }
     
     func randomEpisodesFetched(episodes: [RandomEpisodesResponse]) {
@@ -309,6 +311,8 @@ extension HomePresenter: HomeNetworkInteractorOutputProtocol{
             fetchGroup.leave()
         }
         randomEpisodes = episodes
+        
+        sections.append("Just Listen")
     }
     
     func failedWith(with error: Error) {
@@ -327,6 +331,7 @@ extension HomePresenter: HomeNetworkInteractorOutputProtocol{
         
         let categoryName = podcasts.name
         categoriesBestPodcasts.updateValue(podcasts.podcasts, forKey: categoryName)
+        sections.append(categoryName)
     }
     
 }
@@ -340,9 +345,6 @@ extension HomePresenter: HomeLocalInteractorOutput{
     }
     
     func failed(with error: Error) {
-        defer {
-            fetchGroup.leave()
-        }
         print(error.localizedDescription)
     }
     
@@ -352,19 +354,26 @@ extension HomePresenter: HomeLocalInteractorOutput{
     }
     
     func success(with recentlyPlayed: [RecentlyPlayedEpisodeModel]){
-        
-        defer {
-            fetchGroup.leave()
-        }
         self.recentlyPlayed = recentlyPlayed
-        view?.reloadHomeCollectionView()
+
+        if sections.isEmpty{
+            sections.insert("Recently Played", at: 0)
+        }
+        else if !sections.isEmpty && sections[0] != "Recently Played"{
+           sections.insert("Recently Played", at: 0)
+        }
+        
     }
-    
-    
 }
 
 extension HomePresenter: PlayerViewDelegate {
     func playerViewWillDisappear() {
+        viewWillAppear()
+    }
+}
+
+extension HomePresenter: PodcastViewDelegate{
+    func podcastViewWillDisappear() {
         viewWillAppear()
     }
 }
