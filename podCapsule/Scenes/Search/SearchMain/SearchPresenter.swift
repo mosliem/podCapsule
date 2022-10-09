@@ -22,16 +22,13 @@ class SearchPresenter: SearchViewPresenter {
     }
     
     func viewDidLoad() {
+        view?.showLoadingIndicator()
         let random = Int.random(in: 1...10)
-//        interactor?.fetchSuggestedPodcast(pageNumber: random)
+        interactor?.fetchSuggestedPodcast(pageNumber: random)
     }
     
     func suggestedPodcastCount() -> Int {
         return suggestions.count
-    }
-    
-    func searchPressed() {
-        router?.moveToSearchResultController()
     }
     
     func configure(for cell: SuggestedPodcastsCellView, at indexPath: Int){
@@ -58,8 +55,18 @@ class SearchPresenter: SearchViewPresenter {
     
     func cellSelected(at indexPath: Int) {
         
+        let selectedPodcast = convert(to: PodcastObject.self, object: suggestions[indexPath])
+        router?.moveToPodcastDetailsController(with: selectedPodcast)
     }
     
+    func convert(to type: PodcastObject.Type, object: HomePodcastResponse) -> PodcastObject{
+        
+        var convertedObject: PodcastObject
+        
+        convertedObject = PodcastObject(id:object.id , title: object.title, publisher: object.publisher, image: object.image, description: nil, total_episodes: nil, genre_ids: nil, listennotes_url: object.listennotes_url)
+        
+        return convertedObject
+    }
 }
 
 extension SearchPresenter: SearchInteractorOutput{
@@ -71,9 +78,11 @@ extension SearchPresenter: SearchInteractorOutput{
         }
         
         view?.reloadsuggestedData()
+        view?.hideLoadingIndicator()
     }
     
     func failed(with error: Error) {
+        view?.hideLoadingIndicator()
         print(error.localizedDescription)
     }
 }
@@ -92,3 +101,4 @@ extension SearchPresenter: SelectedResultsCellProtocol{
     }
     
 }
+

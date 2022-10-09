@@ -27,23 +27,7 @@ class SearchRouter {
 }
 
 extension SearchRouter: SearchViewRouter {
-    
-    func moveToSearchResultController() {
-        
-        let searchResult = SearchResultsRouter.create()
-        let searchController = UISearchController(searchResultsController: searchResult)
-        
-        searchController.searchBar.barTintColor = .white
-        searchController.view.backgroundColor = .white
-        
-        searchController.searchBar.delegate = searchResult as? UISearchBarDelegate
-        
-        // delegate for a result is selected
-        (searchResult as? SearchResultsView)?.presenter?.delegate = (searchView as? SearchView)?.presenter as? SelectedResultsCellProtocol
-        
-        searchView?.present(searchController, animated: true, completion: nil)
-    }
-    
+ 
     
     func moveToPlayerController(with episode: EpisodeObject){
         let vc = PlayerRouter.create(with: episode)
@@ -53,6 +37,7 @@ extension SearchRouter: SearchViewRouter {
     
     
     func moveToPodcastDetailsController(with podcast: PodcastObject){
-        print("podcast")
+        let vc = PodcastDetailsRouter.create(with: podcast)
+        searchView?.navigationController?.pushViewController(vc, animated: true)
     }
 }
