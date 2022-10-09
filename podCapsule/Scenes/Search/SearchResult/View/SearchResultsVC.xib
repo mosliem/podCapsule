@@ -22,7 +22,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Sui-7c-IVY">
-                    <rect key="frame" x="10" y="0.0" width="394" height="862"/>
+                    <rect key="frame" x="10" y="44" width="394" height="818"/>
                 </tableView>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="No results found!" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VwZ-ZJ-Ri1">
                     <rect key="frame" x="20" y="433" width="374" height="50"/>
@@ -54,7 +54,7 @@
                 <constraint firstItem="Sui-7c-IVY" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="10" id="kpc-AK-srg"/>
                 <constraint firstItem="VwZ-ZJ-Ri1" firstAttribute="top" secondItem="TsK-At-kb1" secondAttribute="bottom" constant="5" id="s1l-Wz-87f"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="VwZ-ZJ-Ri1" secondAttribute="trailing" constant="20" id="wAm-FW-ecG"/>
-                <constraint firstItem="Sui-7c-IVY" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="ynE-z9-8M6"/>
+                <constraint firstItem="Sui-7c-IVY" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" id="ynE-z9-8M6"/>
             </constraints>
             <point key="canvasLocation" x="-1555.072463768116" y="-893.97321428571422"/>
         </view>
