@@ -30,8 +30,12 @@ class SearchResultsPresenter: SearchResultsViewPresenter {
 //MARK:- Search for query
     
     func searchBarChanged(with text: String?) {
-        
+
         guard let text = text else {
+            return
+        }
+        
+        guard !text.isEmpty else{
             return
         }
         
@@ -127,7 +131,6 @@ extension SearchResultsPresenter{
     func selectCell(for section: Int, at indexPath: Int) {
         
         view?.deselectCell()
-        
         switch SearchResultsSections.typeForSection(index: section) {
            
             case .Podcasts:
@@ -159,7 +162,7 @@ extension SearchResultsPresenter{
     
     private func configurePodcastCell(cellData: PodcastObject, cell: PodcastResultsTableCellView){
         
-        if let imageURL = URL(string: cellData.image ){
+        if let imageURL = URL(string: cellData.image ?? ""){
             cell.displayImage(with: imageURL)
         }
         else{
@@ -182,7 +185,7 @@ extension SearchResultsPresenter{
     
     private func configureEpisodeCell(cellData: EpisodeObject, cell: EpisodeResultsTableCellView){
         
-        if let imageURL = URL(string: cellData.image ){
+        if let imageURL = URL(string: cellData.image ?? "" ){
             cell.displayImage(with: imageURL)
         }
         else{
@@ -192,6 +195,7 @@ extension SearchResultsPresenter{
         if let publisher = cellData.podcast?.publisher {
             cell.displayPublisher(publisher: publisher )
         }
+        
         let duration = convertSecToDuration(sec: cellData.audio_length_sec)
         cell.displayDuration(duration: duration)
         
@@ -227,7 +231,7 @@ extension SearchResultsPresenter: SearchResultsInteractorOutput{
         defer{
             searchResultGroup.leave()
         }
-        
+
         DispatchQueue.main.async {
             
             self.view?.hideResultsTableView()
