@@ -25,6 +25,16 @@ extension SearchVC: SearchView {
         self.navigationController?.setNavigationBarHidden(false, animated: false)
     }
     
+    func showLoadingIndicator() {
+        self.showIndicator()
+    }
+    
+    func hideLoadingIndicator() {
+        DispatchQueue.main.async {
+            self.hideIndicator()
+        }
+    }
+    
 }
 
 extension SearchVC: UITableViewDelegate, UITableViewDataSource{
@@ -45,17 +55,7 @@ extension SearchVC: UITableViewDelegate, UITableViewDataSource{
         return cell
     }
     
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        let view = SearchButtonView()
-        
-        view.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: 50)
-        view.delegate = self
-        return view
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 65
-    }
+ 
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 100
@@ -76,11 +76,4 @@ extension SearchVC: UIScrollViewDelegate{
     
 }
 
-extension SearchVC: SearchButtonDelegate{
-    
-    func searchButtonPressed() {
-        presenter?.searchPressed()
-    }
-    
-}
 
