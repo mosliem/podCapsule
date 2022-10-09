@@ -25,23 +25,49 @@ class TabBarRouter: TabBarViewRouter{
     
       func setupTabBarNavigation() {
         
-        let homeVC = HomeRouter.create()
+       let homeNav = setupHomeVC()
+       let searchNav = setupSearchVC()
+       let favoritesNav = setupFavoritesVC()
+       tabBarView?.setViewControllers([homeNav, searchNav, favoritesNav], animated: true)
+    }
+    
+    func setupSearchVC() -> UIViewController {
+
         let searchVC = SearchRouter.create()
-        let favoritesVC = FavoritesRouter.create()
-        
-        let homeNavigation = UINavigationController(rootViewController: homeVC)
         let searchNavigation = UINavigationController(rootViewController: searchVC)
+        
+        searchNavigation.tabBarItem = UITabBarItem(title: "Search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
+        searchNavigation.navigationBar.prefersLargeTitles = true
+        let searchResultsVC = SearchResultsRouter.create()
+        
+        (searchVC as! SearchVC).searchController = UISearchController(searchResultsController: searchResultsVC)
+        
+        (searchVC as! SearchVC).searchController?.searchBar.delegate = searchResultsVC as? UISearchBarDelegate
+        
+        (searchResultsVC as! SearchResultsView).presenter?.delegate = (searchVC as! SearchView).presenter as? SelectedResultsCellProtocol
+        
+        return searchNavigation
+    }
+    
+    func setupHomeVC() -> UIViewController{
+        
+        let homeVC = HomeRouter.create()
+        let homeNavigation = UINavigationController(rootViewController: homeVC)
+        
+        homeNavigation.tabBarItem = UITabBarItem(title: "Home", image: UIImage(systemName: "house.fill"), tag: 1)
+        homeNavigation.navigationBar.prefersLargeTitles = true
+        
+        return homeNavigation
+    }
+    
+    
+    func setupFavoritesVC() -> UIViewController {
+        let favoritesVC = FavoritesRouter.create()
         let favoritesNavigation = UINavigationController(rootViewController: favoritesVC)
         
-        homeNavigation.tabBarItem = UITabBarItem(title: "home", image: UIImage(systemName: "house.fill"), tag: 1)
-        searchNavigation.tabBarItem = UITabBarItem(title: "search", image: UIImage(systemName: "magnifyingglass"), tag: 1)
-        favoritesNavigation.tabBarItem = UITabBarItem(title: "favorites", image: UIImage(systemName: "bookmark.fill"), tag: 1)
-        
-        homeNavigation.navigationBar.prefersLargeTitles = true
-        searchNavigation.navigationBar.prefersLargeTitles = true
+        favoritesNavigation.tabBarItem = UITabBarItem(title: "Favorites", image: UIImage(systemName: "bookmark.fill"), tag: 1)
         favoritesNavigation.navigationBar.prefersLargeTitles = true
         
-        tabBarView?.setViewControllers([homeNavigation, searchNavigation, favoritesNavigation], animated: true)
-        
+        return favoritesNavigation
     }
 }
