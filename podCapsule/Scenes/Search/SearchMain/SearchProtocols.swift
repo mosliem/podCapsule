@@ -14,6 +14,8 @@ protocol SearchView: class {
     func hideNavigationBar()
     func showNavigationBar()
     func reloadsuggestedData()
+    func showLoadingIndicator()
+    func hideLoadingIndicator()
 }
 
 protocol SearchViewPresenter: class {
@@ -25,7 +27,7 @@ protocol SearchViewPresenter: class {
     init(view: SearchView, interactor: SearchInteractorInput, router: SearchViewRouter)
     func viewDidLoad()
     func suggestedPodcastCount() -> Int
-    func searchPressed()
+
     func tableScrolled(with offset: Float)
     func configure(for cell: SuggestedPodcastsCellView, at indexPath: Int)
     func cellSelected(at indexPath: Int)
@@ -33,7 +35,6 @@ protocol SearchViewPresenter: class {
 
 protocol SearchViewRouter: class {
     
-    func moveToSearchResultController()
     func moveToPlayerController(with episode: EpisodeObject)
     func moveToPodcastDetailsController(with podcast: PodcastObject)
 }
