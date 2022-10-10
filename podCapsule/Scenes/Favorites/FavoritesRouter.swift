@@ -16,7 +16,9 @@ class FavoritesRouter {
         let view = FavoritesVC()
         let interactor = FavoritesInteractor()
         let router = FavoritesRouter()
-        let presenter = FavoritesPresenter(view: view, interactor: interactor, router: router)
+        let sectionHandler = FavoriteSectionsHandler()
+        
+        let presenter = FavoritesPresenter(view: view, interactor: interactor, router: router, sectionsHandler: sectionHandler)
         
         view.presenter = presenter
         router.favoritesView = view
