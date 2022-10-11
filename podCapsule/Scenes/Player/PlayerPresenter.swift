@@ -282,7 +282,7 @@ extension PlayerPresenter {
         lovedEpisode.title = episode?.title ?? ""
         lovedEpisode.audio_length_sec = episode!.audio_length_sec
         lovedEpisode.audioLink = episode?.audio
-        
+        lovedEpisode.publisher = episode?.podcast?.publisher ?? ""
         interactor?.addToLovedList(lovedEpisode: lovedEpisode)
     }
     
