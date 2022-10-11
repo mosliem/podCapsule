@@ -14,5 +14,5 @@ class LovedEpisode: Object{
     @Persisted var audioLink: String?
     @Persisted var image: String?
     @Persisted var audio_length_sec: Int
-    
+    @Persisted var publisher: String
 }
