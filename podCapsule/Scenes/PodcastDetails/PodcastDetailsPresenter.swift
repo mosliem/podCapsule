@@ -183,6 +183,7 @@ extension PodcastDetailsPresenter{
         lovedObject.publisher = podcast.publisher
         lovedObject.total_episodes = podcast.total_episodes
         lovedObject.genre_ids.append(objectsIn: podcast.genre_ids ?? [])
+        lovedObject.listennotes_url = podcast.listennotes_url
         return lovedObject
     }
 }
