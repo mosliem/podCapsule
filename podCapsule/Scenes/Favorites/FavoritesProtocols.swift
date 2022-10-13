@@ -14,9 +14,13 @@ protocol FavoritesView: class  {
     func showLoader()
     func hideLoader()
     
+    func showNoFavoritesFound()
+    func hideNoFavoritesFound()
+    
     func appendPodcastSectionLayout()
     func appendEpisodeSectionLayout()
     
+    func resetCollectionViewLayout()
     func setCollectionSectionsLayout()
     func showErrorAlert(title: String, message: String, actionTitle: String, actionHandler: @escaping (UIAlertAction?) -> ())
 }
@@ -32,15 +36,17 @@ protocol FavoritesViewPresenter: class{
     func viewWillAppear()
     func numberOfSection() -> Int
     
+    func titleForSection(at section: Int, header: SectionsCollectionReusableViewInput)
     func type<T>(for section: Int) -> T
     func numberOfItems(for section: Int) -> Int
-    func configureCell<T>(cell: T, type: T.Type)
+    func configure<T>(cell: T, at section: Int, for indexPath: Int)
     
     func cellSelected(at section: Int, for indexPath: Int)
 }
 
 protocol FavoritesViewRouter: class {
-    
+    func moveToPodcastDetails(with podcast: PodcastObject)
+    func moveToAudioPlayer(with episode: EpisodeObject)
 }
 
 protocol FavoritesInteractorInput: class {
