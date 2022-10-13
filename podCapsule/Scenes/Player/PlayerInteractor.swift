@@ -13,26 +13,26 @@ class PlayerInteractor: PlayerInteractorInput{
     
     func addNew(recentlyPlayed episode: RecentlyPlayedEpisodeModel) {
         
-        RealmManager.shared.add(object: episode) { (result) in
+        RealmManager.shared.add(object: episode) { [weak self] (result) in
             
             switch result {
                 case .success(_):
                     break
                 case .failure(let error):
-                    self.presenter?.failed(with: (error as! RealmError).errorMessage)
+                    self?.presenter?.failed(with: (error as! RealmError).errorMessage)
             }
         }
     }
     
     func addToLovedList(lovedEpisode: LovedEpisode) {
         
-        RealmManager.shared.add(object: lovedEpisode) { (result) in
+        RealmManager.shared.add(object: lovedEpisode) { [weak self] (result) in
             
             switch result {
                 case .success(_):
                     break
                 case .failure(let error):
-                    self.presenter?.failed(with: (error as! RealmError).errorMessage)
+                    self?.presenter?.failed(with: (error as! RealmError).errorMessage)
             }
         }
         
@@ -40,21 +40,21 @@ class PlayerInteractor: PlayerInteractorInput{
     
     func removeFromLovedList(id: String, type: LovedEpisode.Type ){
         
-        RealmManager.shared.deleteObject(with: id, type: type) { (result) in
+        RealmManager.shared.deleteObject(with: id, type: type) { [weak self] (result) in
             
             switch result {
                 case .success(_):
                     break
                 case .failure(let error):
-                    self.presenter?.failed(with: (error as! RealmError).errorMessage)
+                    self?.presenter?.failed(with: (error as! RealmError).errorMessage)
             }
         }
     }
     
     func isExistInLovedList(id: String) {
         
-        RealmManager.shared.checkIfExist(with: id, type: LovedEpisode.self) { (exist) in
-            self.presenter?.existedInLovedList(existed: exist)
+        RealmManager.shared.checkIfExist(with: id, type: LovedEpisode.self) { [weak self] (exist) in
+            self?.presenter?.existedInLovedList(existed: exist)
         }
 
     }
