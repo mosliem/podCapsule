@@ -107,6 +107,7 @@ class PlayerPresenter: PlayerViewPresenter {
         newRecentlyPlayedEpisode()
         playerView?.playerViewWillDisappear()
         router?.dismissPlayerVC()
+        audioPlayer = nil
     }
     
     func sliderValueChanged(value: Float) {
@@ -283,6 +284,19 @@ extension PlayerPresenter {
         lovedEpisode.audio_length_sec = episode!.audio_length_sec
         lovedEpisode.audioLink = episode?.audio
         lovedEpisode.publisher = episode?.podcast?.publisher ?? ""
+        
+        let episodePodcast = LovedPodcastModel()
+        episodePodcast.id = episode?.podcast?.id
+        episodePodcast.title = episode?.podcast?.title ?? ""
+        episodePodcast.image = episode?.podcast?.image
+        episodePodcast.publisher = episode?.podcast?.publisher ?? ""
+        episodePodcast.total_episodes = episode?.podcast?.total_episodes
+        episodePodcast.genre_ids.append(objectsIn: episode?.podcast?.genre_ids ?? [])
+        episodePodcast.listennotes_url = episode?.podcast?.listennotes_url
+        episodePodcast.info = episode?.podcast?.description
+        
+        lovedEpisode.podcast = episodePodcast
+        
         interactor?.addToLovedList(lovedEpisode: lovedEpisode)
     }
     
