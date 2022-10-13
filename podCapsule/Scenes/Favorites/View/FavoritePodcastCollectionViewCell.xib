@@ -11,22 +11,22 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="gTV-IL-0wX" customClass="FavoritePodcastCollectionViewCell" customModule="podCapsule" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="171" height="197"/>
+            <rect key="frame" x="0.0" y="0.0" width="196" height="244"/>
             <autoresizingMask key="autoresizingMask"/>
             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                <rect key="frame" x="0.0" y="0.0" width="171" height="197"/>
+                <rect key="frame" x="0.0" y="0.0" width="196" height="244"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kQU-fA-Yfb">
-                        <rect key="frame" x="0.0" y="0.0" width="171" height="197"/>
+                        <rect key="frame" x="0.0" y="0.0" width="196" height="244"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CaP-cG-TE2" userLabel="imageShadowView">
-                                <rect key="frame" x="0.0" y="0.0" width="171" height="150"/>
+                                <rect key="frame" x="10" y="10" width="176" height="170"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="d5y-rf-elG">
-                                        <rect key="frame" x="0.0" y="0.0" width="171" height="150"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="176" height="170"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="150" id="WpP-tf-3Pc"/>
+                                            <constraint firstAttribute="height" constant="170" id="WpP-tf-3Pc"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -38,25 +38,25 @@
                                     <constraint firstAttribute="trailing" secondItem="d5y-rf-elG" secondAttribute="trailing" id="wxk-6a-lSM"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="13" translatesAutoresizingMaskIntoConstraints="NO" id="non-6G-UUf">
-                                <rect key="frame" x="0.0" y="150" width="171" height="47"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="16" translatesAutoresizingMaskIntoConstraints="NO" id="non-6G-UUf">
+                                <rect key="frame" x="10" y="185" width="176" height="59"/>
                                 <constraints>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="25" id="U9G-z4-QHO"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="16"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="18"/>
                                 <color key="textColor" red="0.181912623" green="0.2138132103" blue="0.21583518400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
-                            <constraint firstItem="CaP-cG-TE2" firstAttribute="top" secondItem="kQU-fA-Yfb" secondAttribute="top" id="9bP-gh-kwH"/>
-                            <constraint firstAttribute="trailing" secondItem="CaP-cG-TE2" secondAttribute="trailing" id="Gjk-OC-gvV"/>
-                            <constraint firstItem="non-6G-UUf" firstAttribute="top" secondItem="CaP-cG-TE2" secondAttribute="bottom" id="KAZ-Zy-I21"/>
-                            <constraint firstItem="non-6G-UUf" firstAttribute="leading" secondItem="kQU-fA-Yfb" secondAttribute="leading" id="ZLZ-Qt-l1R"/>
+                            <constraint firstItem="CaP-cG-TE2" firstAttribute="top" secondItem="kQU-fA-Yfb" secondAttribute="top" constant="10" id="9bP-gh-kwH"/>
+                            <constraint firstAttribute="trailing" secondItem="CaP-cG-TE2" secondAttribute="trailing" constant="10" id="Gjk-OC-gvV"/>
+                            <constraint firstItem="non-6G-UUf" firstAttribute="top" secondItem="CaP-cG-TE2" secondAttribute="bottom" constant="5" id="KAZ-Zy-I21"/>
+                            <constraint firstItem="non-6G-UUf" firstAttribute="leading" secondItem="kQU-fA-Yfb" secondAttribute="leading" constant="10" id="ZLZ-Qt-l1R"/>
                             <constraint firstAttribute="bottom" secondItem="non-6G-UUf" secondAttribute="bottom" id="lzw-jv-OlE"/>
-                            <constraint firstAttribute="trailing" secondItem="non-6G-UUf" secondAttribute="trailing" id="sWQ-BA-FiA"/>
-                            <constraint firstItem="CaP-cG-TE2" firstAttribute="leading" secondItem="kQU-fA-Yfb" secondAttribute="leading" id="wM9-00-jKj"/>
+                            <constraint firstAttribute="trailing" secondItem="non-6G-UUf" secondAttribute="trailing" constant="10" id="sWQ-BA-FiA"/>
+                            <constraint firstItem="CaP-cG-TE2" firstAttribute="leading" secondItem="kQU-fA-Yfb" secondAttribute="leading" constant="10" id="wM9-00-jKj"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -68,13 +68,13 @@
                 <constraint firstItem="kQU-fA-Yfb" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" id="ols-kP-5MT"/>
                 <constraint firstAttribute="trailing" secondItem="kQU-fA-Yfb" secondAttribute="trailing" id="rCH-A8-ND8"/>
             </constraints>
-            <size key="customSize" width="171" height="197"/>
+            <size key="customSize" width="196" height="244"/>
             <connections>
-                <outlet property="imageShadowView" destination="d5y-rf-elG" id="hYL-9g-cr0"/>
+                <outlet property="imageShadowView" destination="CaP-cG-TE2" id="cyi-pu-yq8"/>
                 <outlet property="podcastImageView" destination="d5y-rf-elG" id="wBj-xu-Fn7"/>
                 <outlet property="podcastTitleLabel" destination="non-6G-UUf" id="t6D-Ou-CNj"/>
             </connections>
-            <point key="canvasLocation" x="-44.20289855072464" y="72.65625"/>
+            <point key="canvasLocation" x="-439" y="1"/>
         </collectionViewCell>
     </objects>
     <resources>
