@@ -30,7 +30,7 @@ protocol HomeViewPresenter: class {
     func viewWillAppear()
     func numberOfSections() -> Int
     func itemsForSection(for section: Int) -> Int
-    func titleForSection(for section: Int, header: HomeCollectionReusableViewInput)
+    func titleForSection(for section: Int, header: SectionsCollectionReusableViewInput)
    
     func cellType<T>(for section: Int) -> T
     
@@ -86,11 +86,6 @@ protocol HomeViewRouter: class {
     func moveToPlayer(with recentlyPlayed: EpisodeObject, playedDuration: Double?)
     func moveToPlayer(with episode: EpisodeObject)
     func moveToPodcastDetails(with podcast: PodcastObject)
-}
-
-protocol HomeCollectionReusableViewInput: class  {
-    
-    func dispalySectionTitle(text: String)
 }
 
 protocol RecentlyPlayedCellView: class {

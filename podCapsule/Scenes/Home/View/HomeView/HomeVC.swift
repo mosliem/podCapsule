@@ -52,7 +52,7 @@ class HomeVC: UIViewController {
         
         homeCollectionView?.register(UINib(nibName: RecentlyPlayedCell.identifier, bundle: nil), forCellWithReuseIdentifier: RecentlyPlayedCell.identifier)
         
-        homeCollectionView?.register(HomeSectionsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: HomeSectionsCollectionReusableView.identifier)
+        homeCollectionView?.register(SectionsCollectionReusableView.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: SectionsCollectionReusableView.identifier)
         
         homeCollectionView?.delegate = self
         homeCollectionView?.dataSource = self

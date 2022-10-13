@@ -7,9 +7,14 @@
 
 import UIKit
 
-class HomeSectionsCollectionReusableView: UICollectionReusableView {
+protocol SectionsCollectionReusableViewInput: class  {
+    
+    func dispalySectionTitle(text: String)
+}
+
+class SectionsCollectionReusableView: UICollectionReusableView {
         
-        static let identifier = "HomeSectionTitlesReusableView"
+        static let identifier = "SectionsTitlesReusableView"
         
         private let titleLabel : UILabel = {
             let label = UILabel()
@@ -38,7 +43,7 @@ class HomeSectionsCollectionReusableView: UICollectionReusableView {
 }
 
 
-extension HomeSectionsCollectionReusableView: HomeCollectionReusableViewInput{
+extension SectionsCollectionReusableView: SectionsCollectionReusableViewInput{
     
     func dispalySectionTitle(text: String) {
         titleLabel.text = text
