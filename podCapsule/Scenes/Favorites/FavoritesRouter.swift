@@ -9,15 +9,15 @@ import UIKit
 
 class FavoritesRouter {
     
-    internal var favoritesView: UIViewController?
+    unowned var favoritesView: UIViewController?
     
-    static func create() -> UIViewController{
+    static func create() -> UIViewController {
         
         let view = FavoritesVC()
         let interactor = FavoritesInteractor()
         let router = FavoritesRouter()
         let sectionHandler = FavoriteSectionsHandler()
-        
+    
         let presenter = FavoritesPresenter(view: view, interactor: interactor, router: router, sectionsHandler: sectionHandler)
         
         view.presenter = presenter
@@ -30,6 +30,17 @@ class FavoritesRouter {
 }
 
 
+
 extension FavoritesRouter: FavoritesViewRouter{
     
+    func moveToPodcastDetails(with podcast: PodcastObject){
+        let vc = PodcastDetailsRouter.create(with: podcast)
+        favoritesView?.navigationController?.pushViewController(vc, animated: true)
+    }
+    
+    func moveToAudioPlayer(with episode: EpisodeObject){
+        let vc = PlayerRouter.create(with: episode)
+        vc.modalPresentationStyle = .overFullScreen
+        favoritesView?.present(vc, animated: true)
+    }
 }
