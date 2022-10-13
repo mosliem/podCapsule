@@ -9,15 +9,22 @@ import UIKit
 
 class PlayerRouter{
     
-    weak var playerView: UIViewController?
+    unowned var playerView: UIViewController?
     
-    static func create(with episode: EpisodeObject?) -> UIViewController{
+    static func create(with episode: EpisodeObject?, playedDuration: Double? = 0) -> UIViewController{
 
         let view = PlayerVC()
         let router = PlayerRouter()
         let interactor = PlayerInteractor()
         let audioPlayer = AudioPlayer()
-        let presenter = PlayerPresenter(view: view, interactor: interactor, router: router, episode: episode, audioPlayer: audioPlayer)
+        var presenter: PlayerPresenter?
+        
+        if playedDuration == 0 {
+             presenter = PlayerPresenter(view: view, interactor: interactor, router: router, episode: episode, audioPlayer: audioPlayer)
+        }
+        else{
+            presenter = PlayerPresenter(view: view, interactor: interactor, router: router, episode: episode, audioPlayer: audioPlayer, playedDuration: playedDuration)
+        }
         
         interactor.presenter = presenter
         view.presenter = presenter
@@ -26,6 +33,7 @@ class PlayerRouter{
         
         return view
     }
+    
 }
 
 
