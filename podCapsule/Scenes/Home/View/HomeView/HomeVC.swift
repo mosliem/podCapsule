@@ -18,6 +18,7 @@ class HomeVC: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         setupNavigationBarAppearance()
+        presenter?.viewWillAppear()
     }
     
     override func viewDidLoad() {
@@ -25,6 +26,10 @@ class HomeVC: UIViewController {
 
         configureHomeCollectionView()
         presenter?.viewDidLoad()
+    }
+    
+    deinit {
+        print("Home Deinit")
     }
     
    private func setupNavigationBarAppearance(){

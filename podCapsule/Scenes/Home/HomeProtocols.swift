@@ -27,7 +27,7 @@ protocol HomeViewPresenter: class {
     
     init(view: HomeView, networkInteractor: HomeNetworkInteractorInputProtocol, localInteractor: HomeLocalInteractorInput, router: HomeViewRouter)
     func viewDidLoad()
-    
+    func viewWillAppear()
     func numberOfSections() -> Int
     func itemsForSection(for section: Int) -> Int
     func titleForSection(for section: Int, header: HomeCollectionReusableViewInput)

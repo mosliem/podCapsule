@@ -35,34 +35,38 @@ class HomePresenter: HomeViewPresenter{
     }
     
     func viewWillAppear(){
-        fetchGroup.enter()
-        localInteractor?.getRecentlyPlayed()
-        setViewSectionsLayout()
+       getRecentlyPlayed()
     }
     
     func viewDidLoad() {
-//        view?.showLoader()
+        view?.showLoader()
         getPreferences()
         fetchPodcasts()
     }
     
-    private func fetchPodcasts(){
+    private func getRecentlyPlayed(){
         fetchGroup.enter()
-//        fetchGroup.enter()
-        
         localInteractor?.getRecentlyPlayed()
-        networkInteractor?.fetchPopularPodcast()
-//        networkInteractor?.fetchRandomEpisodes()
-//        fetchCategoriesPodcasts()
-        
+
         fetchGroup.notify(queue: .main){
             self.setViewSectionsLayout()
         }
     }
     
+    private func fetchPodcasts(){
+//        fetchGroup.enter()
+        fetchGroup.enter()
+        
+//        localInteractor?.getRecentlyPlayed()
+        networkInteractor?.fetchPopularPodcast()
+//        networkInteractor?.fetchRandomEpisodes()
+//        fetchCategoriesPodcasts()
+        
+
+    }
+    
     private func setViewSectionsLayout(){
         var allSections = sections
-
         if !sections.isEmpty && addedSection[sections[0]] == nil && sections[0] == "Recently Played"{
             addedSection.updateValue(true, forKey: sections[0])
             view?.addRecentlyPlayedSection()
@@ -301,7 +305,6 @@ extension HomePresenter: HomeNetworkInteractorOutputProtocol{
         for podcast in podcasts.curated_lists{
             popularPodcasts.append(contentsOf: podcast.podcasts)
         }
- 
         sections.append("Popular Podcasts")
     }
     
@@ -344,6 +347,9 @@ extension HomePresenter: HomeLocalInteractorOutput{
     }
     
     func failed(with error: Error) {
+        defer {
+            fetchGroup.leave()
+        }
         print(error.localizedDescription)
     }
     
@@ -353,6 +359,10 @@ extension HomePresenter: HomeLocalInteractorOutput{
     }
     
     func success(with recentlyPlayed: [RecentlyPlayedEpisodeModel]){
+        defer {
+            fetchGroup.leave()
+        }
+        
         self.recentlyPlayed = recentlyPlayed
 
         if sections.isEmpty{
@@ -361,7 +371,7 @@ extension HomePresenter: HomeLocalInteractorOutput{
         else if !sections.isEmpty && sections[0] != "Recently Played"{
            sections.insert("Recently Played", at: 0)
         }
-        
+      
     }
 }
 
@@ -371,8 +381,8 @@ extension HomePresenter: PlayerViewDelegate {
     }
 }
 
-extension HomePresenter: PodcastViewDelegate{
-    func podcastViewWillDisappear() {
-        viewWillAppear()
-    }
-}
+//extension HomePresenter: PodcastViewDelegate{
+//    func podcastViewWillDisappear() {
+//        viewWillAppear()
+//    }
+//}
