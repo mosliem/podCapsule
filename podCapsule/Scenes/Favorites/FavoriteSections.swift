@@ -14,18 +14,39 @@ enum FavoriteSections: String, CaseIterable{
 
 struct FavoriteSectionsHandler{
     
-    var sections = [FavoriteSections]()
+    private var sections = [FavoriteSections]()
     
     init() {
         sections = []
     }
+    
+    mutating func removeAllSections(){
+        sections.removeAll()
+    }
+    
+    func typeForIndex(index: Int) -> FavoriteSections{
+        return sections[index]
+    }
+    
+    func sectionsCount() -> Int{
+        return sections.count
+    }
+    
+    func getSections() -> [FavoriteSections]{
+       return sections
+    }
+    
     mutating func append(section: String){
         
         guard let sectionName = (FavoriteSections.allCases.first{$0.rawValue == section}) else{
             return
         }
         
-        sections.append(sectionName)
+        if !sections.contains(sectionName){
+            sections.append(sectionName)
+        }
+        
     }
+    
     
 }
