@@ -10,7 +10,7 @@ import UIKit
 
 class PodcastDetailsRouter {
     
-    weak var podcastDetailsView: PodcastDetailsVC?
+    unowned var podcastDetailsView: PodcastDetailsVC?
     
     static func create(with podcast: PodcastObject) -> UIViewController{
         

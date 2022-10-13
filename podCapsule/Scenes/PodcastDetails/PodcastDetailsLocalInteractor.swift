@@ -9,7 +9,7 @@ import RealmSwift
 
 class PodcastDetailsLocalInteractor: PodcastDetailsLocalInteractorInput{
         
-    var presenter: PodcastDetailsLocalInteractorOutput?
+   weak var presenter: PodcastDetailsLocalInteractorOutput?
     
     func addPodcastToLovedPodcast<T>(type: T.Type, object: T) {
         
@@ -40,8 +40,8 @@ class PodcastDetailsLocalInteractor: PodcastDetailsLocalInteractorInput{
 
     func isExistInLovedList(id: String) {
         
-        RealmManager.shared.checkIfExist(with: id, type: LovedPodcastModel.self) { (exist) in
-            self.presenter?.existedInLovedList(existed: exist)
+        RealmManager.shared.checkIfExist(with: id, type: LovedPodcastModel.self) { [weak self] (exist) in
+            self?.presenter?.existedInLovedList(existed: exist)
         }
 
     }
