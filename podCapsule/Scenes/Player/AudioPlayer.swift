@@ -6,7 +6,6 @@
 //
 
 import AVFoundation
-import MediaPlayer
 
 
 class AudioPlayer: AudioPlayerSessionProtocol {
@@ -19,12 +18,12 @@ class AudioPlayer: AudioPlayerSessionProtocol {
     private var playbackTimeUpdater: Timer?
     
     deinit {
-        print("deinit audioplayer")
         self.audioSession = nil
         self.audioURL = nil
         self.audioPlayer = nil
-        self.playbackTimeUpdater = nil
+        self.playbackTimeUpdater?.invalidate()
         removeEndPlayingObserver()
+        print("deinit audio")
     }
    
     //MARK:- protocol functions
@@ -88,8 +87,9 @@ extension AudioPlayer{
             return
         }
         
-        audioPlayer = AVPlayer(url: url)
-        
+        let asset = AVAsset(url: url)
+        audioPlayer = AVPlayer(playerItem: AVPlayerItem(asset: asset))
+
         addEndPlayingObserver()
         startPlaying()
         
