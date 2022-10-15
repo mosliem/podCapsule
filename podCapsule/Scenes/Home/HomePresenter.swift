@@ -54,15 +54,12 @@ class HomePresenter: HomeViewPresenter{
     }
     
     private func fetchPodcasts(){
-//        fetchGroup.enter()
+        fetchGroup.enter()
         fetchGroup.enter()
         
-//        localInteractor?.getRecentlyPlayed()
         networkInteractor?.fetchPopularPodcast()
-//        networkInteractor?.fetchRandomEpisodes()
-//        fetchCategoriesPodcasts()
-        
-
+        networkInteractor?.fetchRandomEpisodes()
+        fetchCategoriesPodcasts()
     }
     
     private func setViewSectionsLayout(){
@@ -120,7 +117,7 @@ class HomePresenter: HomeViewPresenter{
     }
 
     
-    func titleForSection(for section: Int, header: HomeCollectionReusableViewInput){
+    func titleForSection(for section: Int, header: SectionsCollectionReusableViewInput){
         header.dispalySectionTitle(text: sections[section])
     }
     
