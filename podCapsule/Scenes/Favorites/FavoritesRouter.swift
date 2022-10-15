@@ -41,6 +41,7 @@ extension FavoritesRouter: FavoritesViewRouter{
     func moveToAudioPlayer(with episode: EpisodeObject){
         let vc = PlayerRouter.create(with: episode)
         vc.modalPresentationStyle = .overFullScreen
+        (vc as! PlayerView).presenter?.playerView = (favoritesView as! FavoritesView).presenter as? PlayerViewDelegate
         favoritesView?.present(vc, animated: true)
     }
 }
