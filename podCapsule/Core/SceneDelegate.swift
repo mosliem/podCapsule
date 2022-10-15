@@ -15,28 +15,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScence = (scene as? UIWindowScene) else { return }
         let window = UIWindow(windowScene: windowScence)
-        
-        if isNewInstalled() {
-            window.rootViewController = PreferencesRouter.create()
-        }
-        else{
-            window.rootViewController = TabBarRouter.create()
-        }
-        
+        window.rootViewController = UINavigationController(rootViewController: SplashRouter.create())
         window.makeKeyAndVisible()
         self.window = window
     }
     
     
-    func isNewInstalled() -> Bool{
-        
-        guard let isNewInstalled = UserDefaultManger.shared.retrieveObject(for: "isNewInstalled") as? Bool else {
-            UserDefaultManger.shared.addObject(true, key: "isNewInstalled")
-            return true
-        }
-        
-        return !isNewInstalled
-    }
+
     
     func sceneDidDisconnect(_ scene: UIScene) {
         // Called as the scene is being released by the system.
