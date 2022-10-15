@@ -1,22 +1,52 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="13142" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12042"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
-        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SplashScreenVC" customModuleProvider="target">
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SplashScreenVC" customModule="podCapsule" customModuleProvider="target">
             <connections>
+                <outlet property="animationContainerView" destination="1tY-4F-AWj" id="WNZ-QH-NkR"/>
+                <outlet property="nameLabel" destination="9pg-Bv-0aJ" id="DCu-ME-uUM"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="45" translatesAutoresizingMaskIntoConstraints="NO" id="9pg-Bv-0aJ">
+                    <rect key="frame" x="25" y="443" width="364" height="50"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="OTO-Kq-U6x"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="boldSystem" pointSize="50"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <color key="highlightedColor" red="0.46192893400000001" green="0.46192893400000001" blue="0.46192893400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <color key="shadowColor" red="0.46192893400000001" green="0.46192893400000001" blue="0.46192893400000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                    <size key="shadowOffset" width="-1" height="0.0"/>
+                </label>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1tY-4F-AWj" userLabel="animationContainerView">
+                    <rect key="frame" x="25" y="64" width="364" height="379"/>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </view>
+            </subviews>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <color key="backgroundColor" red="0.11843550949999999" green="0.2381330431" blue="0.32132625580000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="9pg-Bv-0aJ" firstAttribute="top" secondItem="1tY-4F-AWj" secondAttribute="bottom" id="23m-FA-W4N"/>
+                <constraint firstItem="1tY-4F-AWj" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="FWa-wh-9Dr"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="9pg-Bv-0aJ" secondAttribute="trailing" constant="25" id="Fy2-Z0-QGp"/>
+                <constraint firstItem="9pg-Bv-0aJ" firstAttribute="centerY" secondItem="i5M-Pr-FkT" secondAttribute="centerY" constant="20" id="NqT-Rq-lzl"/>
+                <constraint firstItem="9pg-Bv-0aJ" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="25" id="RWM-gi-awY"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="1tY-4F-AWj" secondAttribute="trailing" constant="25" id="cBA-tW-d4l"/>
+                <constraint firstItem="1tY-4F-AWj" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="20" id="zf1-NB-G7v"/>
+            </constraints>
+            <point key="canvasLocation" x="-528" y="-37"/>
         </view>
     </objects>
 </document>
