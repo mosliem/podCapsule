@@ -69,7 +69,6 @@ class HomeNetworkInteractor: HomeNetworkInteractorInputProtocol {
             
             switch result {
             case .success(let podcasts):
-                print(podcasts.name, podcasts.podcasts.count)
                 self?.presenter?.bestForCategoryFetched(podcasts: podcasts)
                 
             case .failure(let error):

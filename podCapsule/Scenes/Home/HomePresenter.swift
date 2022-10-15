@@ -302,7 +302,9 @@ extension HomePresenter: HomeNetworkInteractorOutputProtocol{
         for podcast in podcasts.curated_lists{
             popularPodcasts.append(contentsOf: podcast.podcasts)
         }
-        sections.append("Popular Podcasts")
+        print(podcasts.curated_lists.count)
+        sections.insert("Popular Podcasts", at: 1)
+        
     }
     
     func randomEpisodesFetched(episodes: [RandomEpisodesResponse]) {
@@ -378,8 +380,3 @@ extension HomePresenter: PlayerViewDelegate {
     }
 }
 
-//extension HomePresenter: PodcastViewDelegate{
-//    func podcastViewWillDisappear() {
-//        viewWillAppear()
-//    }
-//}

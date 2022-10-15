@@ -35,6 +35,7 @@ extension SplashRouter: SplashViewRouter{
     
     func moveToTabBarView() {
         let vc = TabBarRouter.create()
-        splashVC?.navigationController?.pushViewController(vc, animated: true)
+        UIApplication.shared.windows.first?.rootViewController = vc
+        
     }
 }

@@ -54,14 +54,14 @@ extension SplashScreenVC: SplashView{
         
         animationContainerView.addSubview(logoAnimation!)
        
-        Timer.scheduledTimer(withTimeInterval: 3 , repeats: false) { [weak self](_) in
+        Timer.scheduledTimer(withTimeInterval: 2 , repeats: false) { [weak self](_) in
             self?.logoAnimation?.play()
             self?.logoAnimation?.loopMode = .playOnce
             self?.logoAnimation?.animationSpeed = 0.7
     
         }
 
-        Timer.scheduledTimer(withTimeInterval: 10, repeats: false) { [weak self](_) in
+        Timer.scheduledTimer(withTimeInterval: 9, repeats: false) { [weak self](_) in
             self?.presenter?.finishedAnimation()
         }
     }
