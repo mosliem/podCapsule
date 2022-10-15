@@ -22,9 +22,9 @@ https://user-images.githubusercontent.com/52772674/195969837-aae240dc-89e2-4cbe-
 - Realm 
 - Lottie-iOS
 
-## Getting Started
 
-- <h3> Don't forget Pods install </h3>
+
+<h3> Don't forget Pods install </h3>
 
         pod install
 
