@@ -9,7 +9,7 @@ import UIKit
 
 class HomeRouter{
     
-    var homeVC: UIViewController?
+    weak var homeVC: UIViewController?
     
     static func create() -> UIViewController {
         

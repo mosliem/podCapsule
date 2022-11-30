@@ -31,12 +31,12 @@ enum HomeRequest: Endpoint{
         switch self {
         
         case .fetchPopularPodcastsList(let pageNumber):
-        parameters = ["page": pageNumber]
+            parameters = ["page": pageNumber]
             
         case .fetchRandomEpisode:
             parameters = [:]
             
-        case .fetchBestForCategory(genre_id: let genre_id, pageNum: let pageNum, region: let region):
+        case .fetchBestForCategory(genre_id: let genre_id, pageNum: let pageNum, region: _):
             parameters = ["page":pageNum, "genre_id": genre_id]
             
         }

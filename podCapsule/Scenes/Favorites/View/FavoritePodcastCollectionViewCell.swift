@@ -12,7 +12,7 @@ class FavoritePodcastCollectionViewCell: UICollectionViewCell {
 
     static let identifier = "FavoritePodcastCollectionViewCell"
     
-    @IBOutlet weak var imageShadowView: UIImageView!
+    @IBOutlet weak var imageShadowView: UIView!
     @IBOutlet weak var podcastImageView: UIImageView!
     @IBOutlet weak var podcastTitleLabel: UILabel!
     
@@ -32,9 +32,9 @@ class FavoritePodcastCollectionViewCell: UICollectionViewCell {
         podcastImageView.layer.cornerRadius = 20
         imageShadowView.layer.cornerRadius = 20
         imageShadowView.layer.shadowRadius = 4
+        imageShadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
         imageShadowView.layer.shadowColor = #colorLiteral(red: 0.0383454673, green: 0.1741192639, blue: 0.2161790133, alpha: 1).cgColor
         imageShadowView.layer.shadowOpacity = 0.3
-        imageShadowView.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
 }

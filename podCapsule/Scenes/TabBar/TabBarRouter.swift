@@ -9,7 +9,7 @@ import UIKit
 
 class TabBarRouter: TabBarViewRouter{
 
-    private var tabBarView: UITabBarController?
+    private weak var tabBarView: UITabBarController?
     
     static func create() -> UITabBarController {
         
@@ -41,7 +41,7 @@ class TabBarRouter: TabBarViewRouter{
         let searchResultsVC = SearchResultsRouter.create()
         
         (searchVC as! SearchVC).searchController = UISearchController(searchResultsController: searchResultsVC)
-        
+
         (searchVC as! SearchVC).searchController?.searchBar.delegate = searchResultsVC as? UISearchBarDelegate
         
         (searchResultsVC as! SearchResultsView).presenter?.delegate = (searchVC as! SearchView).presenter as? SelectedResultsCellProtocol

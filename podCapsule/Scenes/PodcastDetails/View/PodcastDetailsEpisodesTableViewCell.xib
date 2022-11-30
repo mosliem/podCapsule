@@ -18,7 +18,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="48i-38-qxL" userLabel="imageShadowView">
-                        <rect key="frame" x="5" y="5" width="70" height="67"/>
+                        <rect key="frame" x="10" y="5" width="70" height="67"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="EP" translatesAutoresizingMaskIntoConstraints="NO" id="qLw-ds-xgu">
                                 <rect key="frame" x="0.0" y="0.0" width="70" height="67"/>
@@ -35,8 +35,8 @@
                             <constraint firstAttribute="bottom" secondItem="qLw-ds-xgu" secondAttribute="bottom" id="zY3-KY-Akt"/>
                         </constraints>
                     </view>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="68k-HN-Ej7" userLabel="titleLabel">
-                        <rect key="frame" x="90" y="10" width="292" height="57"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="14" translatesAutoresizingMaskIntoConstraints="NO" id="68k-HN-Ej7" userLabel="titleLabel">
+                        <rect key="frame" x="95" y="10" width="287" height="57"/>
                         <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="17"/>
                         <color key="textColor" red="0.2204176008" green="0.25907050349999999" blue="0.2615204632" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <nil key="highlightedColor"/>
@@ -48,7 +48,7 @@
                     <constraint firstAttribute="bottom" secondItem="68k-HN-Ej7" secondAttribute="bottom" constant="10" id="BZM-as-bmh"/>
                     <constraint firstItem="48i-38-qxL" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="5" id="VwM-Ni-Enk"/>
                     <constraint firstItem="68k-HN-Ej7" firstAttribute="leading" secondItem="qLw-ds-xgu" secondAttribute="trailing" constant="15" id="Ye8-VL-oBV"/>
-                    <constraint firstItem="48i-38-qxL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="5" id="hXf-n0-Fd3"/>
+                    <constraint firstItem="48i-38-qxL" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="10" id="hXf-n0-Fd3"/>
                     <constraint firstAttribute="bottom" secondItem="48i-38-qxL" secondAttribute="bottom" constant="5" id="t8Q-HT-ayL"/>
                 </constraints>
             </tableViewCellContentView>

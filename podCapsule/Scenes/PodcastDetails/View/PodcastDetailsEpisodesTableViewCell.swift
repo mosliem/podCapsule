@@ -49,5 +49,4 @@ extension PodcastDetailsEpisodesTableViewCell: PodcastDetailsEpisodesCellProtoco
         titleLabel.text = title
     }
     
-    
 }

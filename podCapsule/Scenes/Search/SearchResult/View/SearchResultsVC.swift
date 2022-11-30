@@ -18,13 +18,17 @@ class SearchResultsVC: UIViewController {
     
     var presenter: SearchResultsViewPresenter?
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(true)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
         configureTableView()
     }
 
+
+    
     private func configureTableView(){
         
         resultsTableView.delegate = self

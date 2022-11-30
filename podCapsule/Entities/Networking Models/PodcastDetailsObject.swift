@@ -10,6 +10,7 @@ import Foundation
 struct PodcastDetailsObject: Codable {
  
     let description: String?
-    let episodes: [EpisodeObject]
-    
+    var episodes: [PodcastDetailsEpisodeModel]
+    let total_episodes: Int
+   
 }

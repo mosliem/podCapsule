@@ -10,6 +10,8 @@ import UIKit
 class SearchVC: UIViewController {
     
     @IBOutlet weak var suggestedPodcastsTableView: UITableView!
+    var searchController: UISearchController?
+    
     var presenter: SearchViewPresenter?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -21,10 +23,15 @@ class SearchVC: UIViewController {
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        
         title = "Search"
         presenter?.viewDidLoad()
         configureTableView()
+        configureSearchBar()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(true)
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
 
     }
     
@@ -48,7 +55,12 @@ class SearchVC: UIViewController {
             UINib(nibName: SuggestedPodcastsTableViewCell.identifier, bundle: nil),
             forCellReuseIdentifier: SuggestedPodcastsTableViewCell.identifier
         )
-        
+     
     }
     
+    private func configureSearchBar(){
+        navigationItem.searchController = searchController
+        searchController?.searchBar.placeholder = "search episodes, podcasts"
+        searchController?.definesPresentationContext = true
+    }
 }

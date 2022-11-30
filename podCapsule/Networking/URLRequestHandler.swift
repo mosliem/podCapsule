@@ -24,17 +24,17 @@ class URLRequestHandler{
         
         setRequestValue(endPoint: endPoint)
         constructURLParameters()
-        let request = constructURLRequest()
         
+        let request = constructURLRequest()
         startRequestTask(type: objectType, request: request) {(result) in
-            
+
             switch result {
-            
+
             case .success(let data):
                 completion(.success(data))
             case .failure(let error):
                 completion(.failure(error))
-                
+
             }
         }
     }
@@ -55,19 +55,20 @@ class URLRequestHandler{
             return
         }
         
-        var queries = URLComponents()
-        
+        var queries = [URLQueryItem]()
+    
         for parameter in parameters{
-            queries.queryItems?.append(URLQueryItem(name: parameter.key, value: parameter.value as? String))
+            queries.append(URLQueryItem(name: parameter.key, value: String(describing: parameter.value)))
         }
-        
-        queryParameters = queries
-        absoluteURL = queryParameters?.url(relativeTo: absoluteURL)
+        var urlCompenent = URLComponents(url: absoluteURL!, resolvingAgainstBaseURL: true)
+        urlCompenent?.queryItems = queries
+        absoluteURL = urlCompenent?.url
+
     }
     
     
     private func constructURLRequest() -> URLRequest{
-        
+
         request = URLRequest(url: absoluteURL!)
         request?.allHTTPHeaderFields = headers
         request?.timeoutInterval = 30
@@ -80,18 +81,21 @@ class URLRequestHandler{
                                                  taskCompletion : @escaping(Result<T , Error>) -> Void)
     {
         let task = URLSession.shared.dataTask(with: request) {(data, response , error) in
-            
+         
             guard let data = data , error == nil else {
                 taskCompletion(.failure(error!))
                 return
             }
             
             do {
+                
                 let result = try JSONDecoder().decode(T.self, from: data)
                 taskCompletion(.success(result))
+
+//                let result2 = try JSONSerialization.jsonObject(with: data, options: .allowFragments)
+//                print(result2)
             }
             catch{
-                print(error)
                 taskCompletion(.failure(error))
             }
             

@@ -13,10 +13,10 @@ class NetworkManger {
     static let shared = NetworkManger()
     private init(){}
     
-    func callRequest <T:Codable> (objectType: T.Type, endpoint: Endpoint,completion: @escaping (Result<T,Error>) -> ()){
+    func callRequest <T:Codable> (objectType: T.Type, endpoint: Endpoint, completion: @escaping (Result<T,Error>) -> ()){
 
         URLRequestHandler.sharedInstanse.startRequest(endPoint: endpoint, objectType: objectType, completion: { (response) in
-            
+
             switch response{
             
             case .success(let data):

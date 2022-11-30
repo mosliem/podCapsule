@@ -134,7 +134,7 @@ extension SearchResultsVC: SearchResultsView {
     func deselectCell() {
         
         let indexPath = resultsTableView.indexPathForSelectedRow
-        Timer.scheduledTimer(withTimeInterval: 0.3, repeats: false) { (_) in
+        Timer.scheduledTimer(withTimeInterval: 0.2, repeats: false) { (_) in
             self.resultsTableView.deselectRow(at: indexPath!, animated: true)
         }
     }

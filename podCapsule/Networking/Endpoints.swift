@@ -31,7 +31,7 @@ extension Endpoint{
     }
     
     var headers: [String: String]{
-        return ["X-ListenAPI-Key":Constants.APIkey]
+        return ["X-ListenAPI-Key": Constants.APIkey]
     }
     
     var defualtParameters: Parameters {

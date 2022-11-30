@@ -34,8 +34,6 @@ class TabBarVC: UITabBarController, TabBarView {
         
         appearnce.setTitleTextAttributes(attributes, for: .normal)
     }
-    
-
 
 
 

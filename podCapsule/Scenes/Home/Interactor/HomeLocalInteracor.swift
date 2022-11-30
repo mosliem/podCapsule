@@ -13,15 +13,15 @@ class HomeLocalInteractor: HomeLocalInteractorInput{
     
     func getCategories() {
       
-        RealmManger.shared.retrieveAllObjects(CategoryModel.self) { (result) in
+        RealmManager.shared.retrieveAllObjects(CategoryModel.self) { [weak self](result) in
             
             switch result {
             
             case .success(let cateories):
-                self.presenter?.success(with: cateories as! [CategoryModel])
+                self?.presenter?.success(with: cateories as! [CategoryModel])
                 
-            case .failure(let error):
-                self.presenter?.failed(with: error)
+            case .failure:
+                break
             }
         }
     
@@ -31,5 +31,19 @@ class HomeLocalInteractor: HomeLocalInteractorInput{
     func getRegion() {
         let country = UserDefaultManger.shared.retrieveObject(for: "country") as! String
         presenter?.success(with: country)
+    }
+    
+    func getRecentlyPlayed(){
+      
+        RealmManager.shared.retrieveAllObjects(RecentlyPlayedEpisodeModel.self) {[weak self] (result) in
+            
+            switch result {
+                  
+            case .success(let episodes):
+                self?.presenter?.success(with: episodes as! [RecentlyPlayedEpisodeModel])
+            case .failure(let error):
+                self?.presenter?.failed(with: (error as! RealmError).errorMessage)
+            }
+        }
     }
 }

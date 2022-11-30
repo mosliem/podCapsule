@@ -23,8 +23,7 @@ class PlayerVC: UIViewController {
     @IBOutlet weak var durationLabel: UILabel!
     @IBOutlet weak var playbackTimeLabel: UILabel!
     
- 
-    
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         

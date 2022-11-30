@@ -8,6 +8,7 @@
 import UIKit
 import SDWebImage
 
+
 extension PlayerVC: PlayerView{
     
     func setMaxSliderVal(value: Float) {
@@ -48,6 +49,7 @@ extension PlayerVC: PlayerView{
         playPauseButton.setImage(UIImage(systemName: ImageName), for: .normal)
     }
     
+
     
     func viewErrorAlert(title: String, message: String, actionTitle: String, actionHandler: ((UIAlertAction) -> Void)? = nil)  {
         self.showAlertWithOk(alertTitle: title, message: message, actionTitle: actionTitle, actionHandler: actionHandler)

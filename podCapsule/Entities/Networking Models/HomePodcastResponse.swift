@@ -12,4 +12,5 @@ struct HomePodcastResponse: Codable {
     let title: String
     let publisher: String
     let image: String?
+    let listennotes_url: String?
 }

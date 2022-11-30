@@ -23,10 +23,7 @@ class PreferencesRouter {
         view.presenter = presenter
         interactor.presenter = presenter
         router.view = view
-        
-        let navController = UINavigationController(rootViewController: view)
-        view.navigationController?.navigationBar.isHidden = true
-        return navController
+        return view
     }
 }
 
@@ -59,7 +56,6 @@ extension PreferencesRouter: PreferencesViewRouter{
     func viewTabBar(){
         
         let tabBar = TabBarRouter.create()
-//        TabBarRouter.setupTabBarNavigation()
         view?.navigationController?.pushViewController(tabBar, animated: true)
     }
   

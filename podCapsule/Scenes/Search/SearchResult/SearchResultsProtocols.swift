@@ -71,6 +71,7 @@ protocol SearchResultsViewPresenter: class {
 
 protocol SearchResultsViewRouter: class {
     func dismissView()
+    
 }
 
 protocol SearchResultsInteractorInput: class {

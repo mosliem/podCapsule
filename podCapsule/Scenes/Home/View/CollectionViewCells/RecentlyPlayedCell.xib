@@ -37,7 +37,7 @@
                                     <constraint firstItem="Tck-V1-eZ8" firstAttribute="top" secondItem="RPM-WI-b2M" secondAttribute="top" id="nlB-FS-Khm"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Back issue With treasy edison-Episode 134" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JzW-yT-URI">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="Back issue With treasy edison-Episode 134" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="JzW-yT-URI">
                                 <rect key="frame" x="115" y="10" width="314" height="45"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="dj8-Jd-3l5"/>

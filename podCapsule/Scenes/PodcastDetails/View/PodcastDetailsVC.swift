@@ -30,19 +30,22 @@ class PodcastDetailsVC: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
+        navigationItem.largeTitleDisplayMode = .never
         setupNavigationBarAppearance()
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         renderView()
         presenter?.viewDidLoad()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(true)
+        navigationController?.navigationBar.standardAppearance = UINavigationBarAppearance()
         navigationController?.navigationBar.scrollEdgeAppearance = nil
+        navigationItem.largeTitleDisplayMode = .always
         presenter?.viewWillDisapear()
     }
 
@@ -55,7 +58,7 @@ class PodcastDetailsVC: UIViewController {
         appearance.backgroundColor = .clear
         appearance.shadowColor = .lightGray
         appearance.shadowColor?.withAlphaComponent(0.3)
-
+        
         //Navigation Bar title
         self.navigationItem.title = "Podcast Details"
         appearance.titleTextAttributes = [
@@ -75,6 +78,8 @@ class PodcastDetailsVC: UIViewController {
         
         navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         navigationController?.navigationBar.tintColor = color
+        navigationController?.navigationItem.largeTitleDisplayMode = .never
+
     }
     
     private func renderView(){

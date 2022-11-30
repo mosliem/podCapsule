@@ -9,7 +9,7 @@ import UIKit
 
 class SearchResultsRouter {
     
-    internal var SearchResultView: UIViewController?
+    internal weak var SearchResultView: UIViewController?
     
     static func create() -> UIViewController{
         
@@ -30,5 +30,4 @@ extension SearchResultsRouter: SearchResultsViewRouter{
     func dismissView(){
         SearchResultView?.dismiss(animated: true, completion: nil)
     }
-    
 }

@@ -17,4 +17,6 @@ class RecentlyPlayedPodcastModel: Object{
     @Persisted var info: String?
     @Persisted var total_episodes: Int?
     @Persisted var genre_ids: List<Int?>
+    
+
 }

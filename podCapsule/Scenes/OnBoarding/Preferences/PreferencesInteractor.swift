@@ -13,7 +13,7 @@ class PreferencesInteractor: PreferencesInteractorInput {
     
     func saveSelectedCategories(categories: [CategoryModel]) {
 
-        RealmManger.shared.replaceAllObjects(CategoryModel.self, with: categories) { [weak self] (result) in
+        RealmManager.shared.replaceAllObjects(CategoryModel.self, with: categories) { [weak self] (result) in
             
             switch result{
             

@@ -14,23 +14,27 @@ enum PodcastDetailsRequest: Endpoint {
     
     
     var URLPath: String{
-        return "podcasts/"
+        switch self {
+        
+        case .getPodcastDetails(id: let id, sort: _):
+            return "podcasts/\(id)"
+        }
     }
     
     var parameters: Parameters{
-        
-        var parameters = defualtParameters
-        
+
+        let parameters: [String: Any]
+
         switch self {
-        case.getPodcastDetails(id: let id, sort: let sort):
-            parameters = ["id": id,"sort": sort]
+        case .getPodcastDetails(id: _, sort: let sort):
+            parameters = ["sort": sort]
         }
-        
+
         return parameters
     }
     
     var method: HTTPMethod{
         return .GET
     }
-    
+
 }

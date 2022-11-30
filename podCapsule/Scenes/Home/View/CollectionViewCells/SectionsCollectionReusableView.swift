@@ -14,7 +14,7 @@ protocol SectionsCollectionReusableViewInput: class  {
 
 class SectionsCollectionReusableView: UICollectionReusableView {
         
-        static let identifier = "SectionsTitlesReusableView"
+        static let identifier = "SectionsCollectionReusableView"
         
         private let titleLabel : UILabel = {
             let label = UILabel()

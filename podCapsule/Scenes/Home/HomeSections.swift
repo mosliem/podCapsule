@@ -22,16 +22,11 @@ enum HomeSections: Int, CaseIterable {
             return "Popular Podcasts"
         case .JustListen:
             return "Just Listen"
-    
+            
         }
     }
     
     static func titleForIndex(index: Int) -> String? {
         return self.allCases.first{$0.rawValue == index}?.title
-    }
-    
-    
-    static func sectionForIndex(index: Int) -> HomeSections{
-        return self.allCases.first{$0.rawValue == index}!
     }
 }

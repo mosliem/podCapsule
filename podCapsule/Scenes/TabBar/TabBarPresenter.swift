@@ -10,7 +10,7 @@ import Foundation
 class TabBarPresenter: TabBarViewPresenter {
    
     var router: TabBarViewRouter?
-    var view: TabBarView?
+    weak var view: TabBarView?
     
     
     required init(view: TabBarView, router: TabBarViewRouter) {

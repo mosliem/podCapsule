@@ -1,4 +1,9 @@
 PODS:
+  - lottie-ios (3.4.2)
+  - MarqueeLabel (4.3.0)
+  - NVActivityIndicatorView (5.1.1):
+    - NVActivityIndicatorView/Base (= 5.1.1)
+  - NVActivityIndicatorView/Base (5.1.1)
   - Realm (10.17.0):
     - Realm/Headers (= 10.17.0)
   - Realm/Headers (10.17.0)
@@ -11,6 +16,9 @@ PODS:
   - SKCountryPicker (2.0.0)
 
 DEPENDENCIES:
+  - lottie-ios
+  - MarqueeLabel
+  - NVActivityIndicatorView
   - RealmSwift (~> 10)
   - RSSelectionMenu
   - SDWebImage
@@ -18,6 +26,9 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - lottie-ios
+    - MarqueeLabel
+    - NVActivityIndicatorView
     - Realm
     - RealmSwift
     - RSSelectionMenu
@@ -25,12 +36,15 @@ SPEC REPOS:
     - SKCountryPicker
 
 SPEC CHECKSUMS:
+  lottie-ios: 6bbc53eef6957e4744a50321507015fba72d8ca6
+  MarqueeLabel: 02f5ac8fd6877c94564556cb93fa86c70c08baeb
+  NVActivityIndicatorView: 1f6c5687f1171810aa27a3296814dc2d7dec3667
   Realm: 9533276bd76f66aa2fd0d3ffe700c1f6023dcab6
   RealmSwift: 57f5d59aa29852587aad1e861989e7af139894b5
   RSSelectionMenu: 873d62ebbaef138519f6cf3f073412c2b5d94c2c
   SDWebImage: 53179a2dba77246efa8a9b85f5c5b21f8f43e38f
   SKCountryPicker: 9d4921503cad7224a14a150802bb71228adbd90f
 
-PODFILE CHECKSUM: a121ee90e4ced15a5e8d1cd2d2c5f60b19be0e3c
+PODFILE CHECKSUM: 49cec8e9876d1a0f7fac2acf1c099c414df7dc2d
 
 COCOAPODS: 1.10.1

@@ -27,7 +27,6 @@ protocol PlayerView: class {
     func updatePlayPauseImage(with ImageName: String)
     func updateLoveButton(with image: String)
     
-    
 }
 
 extension PlayerView {
