@@ -29,6 +29,14 @@ https://user-images.githubusercontent.com/52772674/195969837-aae240dc-89e2-4cbe-
         pod install
 
 
+<h3> Edit for SKCountryPicker Pod  </h3>
+
+At CountryPickerController.swift in SKCountryPicker Pod add this protocol to get everything work well   
+
+    public protocol CountryPickerDelegate: class {
+          func didSelectCountry(_ country: Country)
+    }
+    
 ## Features 
 
 - Discover best podcasts for any number of selected categories.
