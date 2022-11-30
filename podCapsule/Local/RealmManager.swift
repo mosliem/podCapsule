@@ -15,8 +15,9 @@ enum RealmError: Error{
     var errorMessage: String {
         
         switch self{
+        
         case .AddError:
-            return "Something went wrong"
+            return "Something went wrong!"
         case .ReadError:
             return "Couldn't get these data!"
         case .DeleteError:
@@ -28,22 +29,23 @@ enum RealmError: Error{
 class RealmManager{
     
     static let shared = RealmManager()
-    private var realm = try! Realm()
+    private let realm = try! Realm()
     
     private init(){}
     
-    //Read all the data for an object type
+     //Read all the data for an object type
     
      func retrieveAllObjects (_ type: Object.Type, completion: @escaping(Result<[Object], Error>) -> () ){
-    
+
         var objects = [Object]()
-        let result = realm.objects(type)
+        
+        let result = realm.objects(type).reversed()
         
         guard !result.isEmpty else{
             return completion(.failure(RealmError.ReadError))
         }
         
-        for entry in result {
+        for entry in result{
             objects.append(entry)
         }
         
@@ -92,9 +94,8 @@ class RealmManager{
         catch{
             completion(.failure(RealmError.AddError))
         }
-        
-    }
     
+    }
     
     func add(objects: [Object], completion: @escaping(Result< Bool , Error>) -> ()){
         
@@ -145,7 +146,7 @@ class RealmManager{
     //MARK:- Delete
     
     public func deleteObject <T> (with id: String, type: T.Type , completion: @escaping(Result<Bool, Error>) -> ()) {
-        
+
         do{
             
             let object = realm.objects(type as! Object.Type).filter("id = %@", id)
